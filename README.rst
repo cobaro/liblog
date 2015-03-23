@@ -6,7 +6,7 @@ liblog is
 
 Quickstart
 ----------
-`
+
 Compiling
 ---------
 See the `Developers Guide <doc/BUILD.rst>`_.
