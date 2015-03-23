@@ -1,0 +1,102 @@
+################################################################
+#COPYRIGHT_BEGIN
+#Copyright (C) 2015, cobaro.org
+#All rights reserved.
+#COPYRIGHT_END
+################################################################
+%define prefix /usr
+#%define sysconfdir /etc
+
+################################################################
+# Header
+Name: @PACKAGE@
+Version: @VERSION@
+Release: %(eval date +%Y%m%d)
+Summary: log
+Group: Development/Libraries
+License: Copyright (C) 2015, cobaro.org. All Rights Reserved.
+Vendor: cobaro.crg
+Packager: cobaro.org <support@cobaro.org>
+BuildRoot: %{_tmppath}/@PACKAGE@-@VERSION@
+Source: @PACKAGE@-@VERSION@.tar.gz
+URL: https://github.com/cobaro/liblog
+Distribution: cobaro.org
+#Icon: icon.gif
+Provides: @PACKAGE@
+
+%description
+This package provides the run-time for @PACKAGE@, a code instrumentation library.
+
+%package devel
+Summary: @PACKAGE@ C SDK
+Group: Development/Libraries
+Requires: @PACKAGE@ >= @VERSION@
+Provides: @PACKAGE@-devel
+
+%description devel
+This package provides the development files for @PACKAGE@, a code instrumentation library.
+
+################################################################
+# pre-build actions (shell)
+%prep
+# clear temporary installation directory
+%__rm -rf %{_tmppath}/@PACKAGE@-@VERSION@
+
+# AC_INIT has a VERSION for the tarball but we use RELEASE as they
+# may diverge
+%setup -n @PACKAGE@-@VERSION@
+
+################################################################
+# rpm settings for configure and build
+# Normally we would use RPM_OPT_FLAGS here (see /usr/lib/rpm/rpmrc)
+# but we're going for optimization in a large way
+%build
+./configure CFLAGS="@RPM_CFLAGS@" --prefix=%{prefix} --libdir=%{_libdir} --sysconfdir=%{_sysconfdir}  --infodir=%{_infodir} --mandir=%{_mandir} --datadir=%{_datadir} --docdir=%{_docdir}/@PACKAGE@-@VERSION@ 
+%__make
+
+################################################################
+# So we do the install to and build a list of all the files
+%install
+%__make install prefix=$RPM_BUILD_ROOT/%{prefix} libdir=$RPM_BUILD_ROOT/%{_libdir} sysconfdir=$RPM_BUILD_ROOT/%{sysconfdir} infodir=$RPM_BUILD_ROOT/%{_infodir} mandir=$RPM_BUILD_ROOT/%{_mandir} docdir=$RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@ datadir=$RPM_BUILD_ROOT/%{_datadir}
+# doc
+#%__mkdir -p $RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@
+#%__install $RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@/t $RPM_BUILD_ROOT/%{_docdir}/$package-@RELEASE@
+
+################################################################
+# After [de]installation we need to ...
+%post
+/sbin/ldconfig
+
+%postun
+/sbin/ldconfig
+
+%postun devel
+rmdir --ignore-fail-on-non-empty %{prefix}/include/cobaro-log0
+
+################################################################
+# So now we need to say what goes where
+
+%files
+%defattr(755,root,root)
+%{_libdir}/@PACKAGE@.so.?
+%{_libdir}/@PACKAGE@.so.?.?.?
+
+%files devel
+%defattr(755,root,root)
+%{_libdir}/@PACKAGE@.so
+%{_libdir}/pkgconfig/@PACKAGE@.pc
+%attr(644,root,root) %{prefix}/include/cobaro-log0/*.h
+%attr(644,root,root) %{_libdir}/@PACKAGE@.a
+%attr(644,root,root) %{_libdir}/@PACKAGE@.la
+
+%clean
+echo cleaning up $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
+test $RPM_BUILD_DIR/@PACKAGE@-@VERSION@ = "/" || %__rm -rf $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
+echo cleaning up $RPM_BUILD_ROOT
+test $RPM_BUILD_ROOT = "/" || %__rm -rf $RPM_BUILD_ROOT
+
+################################################################
+# Emacs settings
+#Local variables:
+#mode:makefile
+#End:

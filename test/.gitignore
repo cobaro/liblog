@@ -1,0 +1,9 @@
+*.o
+.deps
+.libs
+Makefile
+Makefile.in
+test-*.log
+test-*.trs
+test-log
+valgrind.sup

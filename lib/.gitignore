@@ -1,0 +1,8 @@
+.deps/
+.libs/
+config.h
+config.h.in
+libcobaro-log0.la
+stamp-h1
+*.o
+*.lo

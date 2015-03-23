@@ -1,0 +1,15 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libcobaro-trace0
+Description: C code tracing libarry
+URL: http://www.cobaro.org
+Version: @VERSION@
+Conflicts:
+Libs: -L${libdir} -lcobaro-trace0
+Cflags: -I${includedir}
+
+
+

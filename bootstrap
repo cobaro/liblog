@@ -1,0 +1,17 @@
+#!/bin/bash
+echo "Creating configure environment"
+
+if test -x "`which glibtoolize`"; then
+    LIBTOOLIZE=glibtoolize
+else
+    LIBTOOLIZE=libtoolize
+fi
+
+aclocal -I m4 && \
+autoheader && \
+$LIBTOOLIZE -cf && \
+automake -a -c -f && \
+autoconf && \
+echo "Run './configure' or './configure --help' for assistance" || \
+echo "Something went wrong"
+
