@@ -38,4 +38,5 @@ AM_CPPFLAGS = \
 	-I $(top_srcdir)/lib
 
 noinst_HEADERS = \
-	greatest.h
+	greatest.h \
+	messages.h
