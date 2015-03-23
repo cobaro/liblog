@@ -104,7 +104,7 @@ GREATEST_TEST log_messages() {
     char s[256];
     
     log.code = COBARO_TEST_MESSAGE_NULL;
-    log.level = COBARO_LOG_INFO;
+    log.level = COBARO_LOG_WARNING;
     log.p[0].type = COBARO_STRING;
     log.p[0].s = TEST_OUT1;
     log.p[1].type = COBARO_INTEGER;

@@ -167,13 +167,23 @@ typedef struct cobaro_loghandle {
  bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
  {
      char s[1024];
+     size_t formatted = 0;
+     struct timeval now = {0};
 
      // loglevel test
      if (log->level > lh->level) {
          return true;
      }
 
-     if (!cobaro_log_to_string(lh, log, s, sizeof(s))) {
+    // Start trace output with time (hh:mm:ss).
+    gettimeofday(&now, NULL);
+    formatted += strftime(s, sizeof(s), "%T", localtime(&now.tv_sec));
+
+    // Add microseconds, file and line number.
+    formatted += snprintf(&s[formatted], sizeof(s) - formatted,
+                          ".%06ld ", now.tv_usec);
+
+     if (!cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted)) {
          return false;
      }
 
