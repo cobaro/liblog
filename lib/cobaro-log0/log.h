@@ -116,23 +116,28 @@ enum cobaro_log_levels {
 ///
 /// Can carry an log code, plus four parameters of arbitrary types.
 typedef struct cobaro_log {
+    // Queue
+    struct cobaro_log *next;
+
     /// Log code.  Zero is successful.
     uint32_t code;
 
     /// Value type discriminant.
     uint8_t level;
 
+    // make us fit into 512 bytes exactly
+    char pad[48];
+
     /// Array of parameters relevant to this log.
     struct {
         /// Value type discriminant.
         uint8_t type;
 
-
         /// Value
         union {
             /// String value.
-            const char* s;
-
+            char s[48];
+            
             /// Integer value.
             int64_t i;
 
@@ -144,8 +149,6 @@ typedef struct cobaro_log {
         };
     } p[COBARO_LOG_PARAM_MAX];
 
-    // Queue
-    struct cobaro_log *next;
 } *cobaro_log_t;
 
 // log->code       is the numeric identifier for a specific log.
