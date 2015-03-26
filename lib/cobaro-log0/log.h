@@ -160,6 +160,7 @@ typedef struct cobaro_loghandle *cobaro_loghandle_t;
 /// Initialize the logging infrastructure
 ///
 /// Must be called once before logging
+/// Bye default logging is to stdout at level LOG_INFO
 ///
 /// @param[in] messages
 ///     array of message format strings. See test/messages.[ch] for examples
@@ -226,6 +227,15 @@ cobaro_log_t cobaro_log_next(cobaro_loghandle_t lh);
 ///    Pointer to log to be returned.
 void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 
+/// Emit a log to the loghandle's destination
+///
+/// @param[in] lh
+///     loghandle to log with
+///
+/// @param[in] log
+///    Pointer to log object
+bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
+
 /// Set the log level below which we should ignore logs
 ///
 /// @param[in] lh
@@ -253,7 +263,21 @@ bool cobaro_log_loglevel_set(cobaro_loghandle_t lh, int level);
 ///    true on success, false on failure
 bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 
-/// Open a syslog logging facility
+/// Set the log destination to be a file handle
+///
+/// @param[in] lh
+///     loghandle in use
+///
+/// @param[in] f
+///     filehandle to log to
+///
+/// @returns
+///    true on success, false on failure
+bool cobaro_log_file_set(cobaro_loghandle_t, FILE *f);
+
+/// Set the log 
+/// syslog handle remains open until we switch to a file, call
+/// syslog_set again, ot close the loghandle via fini.
 ///
 /// @param[in] lh
 ///     loghandle in use
@@ -266,14 +290,8 @@ bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 ///
 /// @returns
 ///    true on success, false on failure
-bool cobaro_log_syslog_init(cobaro_loghandle_t, char *ident,
-                         int option, int facility);
-
-/// Close a syslog logging facility
-///
-/// @param[in] lh
-///     loghandle in use
-void cobaro_log_syslog_fini(cobaro_loghandle_t);
+bool cobaro_log_syslog_set(cobaro_loghandle_t, char *ident,
+                           int option, int facility);
 
 /// Log a message to syslog
 ///

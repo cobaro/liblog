@@ -11,14 +11,23 @@ COPYRIGHT_END
 
 #define COBARO_LOG_SLOTS (16) // Keep it small as we have limited cache
 
+/// Valid logging destinations
+enum cobaro_logto_t {
+    COBARO_LOGTO_FILE,
+    COBARO_LOGTO_SYSLOG
+};
+
 typedef struct cobaro_loghandle {
-    cobaro_log_t free;
-    cobaro_log_t busy;
-    pthread_spinlock_t lock;
-    cobaro_log_t blocks; // memory
-    bool syslog_opened;  // Have we opened a syslog handle
-    int level;           // messages higher than this are not logged
-    char **messages;    // Array of format strings
+    cobaro_log_t free;       // free logs
+    cobaro_log_t busy;       // currently used logs
+    pthread_spinlock_t lock; // locking
+
+    int level;               // messages higher than this are not logged
+    char **messages;         // Array of format strings
+    int logto;               // log destination
+    FILE *f;                 // if logging to file
+
+    cobaro_log_t blocks;     // memory for cleanup on exit
  } *cobaro_loghandle_t;
 
  // Per-thread
@@ -44,8 +53,10 @@ typedef struct cobaro_loghandle {
          fprintf(stderr, "pthread_spin_init() failed\n");
          abort();
      }
-     lh->syslog_opened = false;
-     lh->level = LOG_INFO; // By default
+
+     lh->logto = COBARO_LOGTO_FILE; // default
+     lh->f = stdout;                // default
+     lh->level = LOG_INFO;          // By default
      lh->messages = messages;
      
      return lh;
@@ -192,19 +203,42 @@ typedef struct cobaro_loghandle {
      return true;
  }
 
- bool cobaro_log_syslog_init(cobaro_loghandle_t lh, char *ident,
-                          int option, int facility)
+ bool cobaro_log_syslog_set(cobaro_loghandle_t lh, char *ident,
+                            int option, int facility)
  {
+     // Close existing syslog handle if open
+     if (lh->logto == COBARO_LOGTO_SYSLOG) {
+         closelog(); 
+     }
      openlog(ident, option, facility);
-     lh->syslog_opened = true;
+     lh->logto = COBARO_LOGTO_SYSLOG;
+
      return true;
  }    
 
- void cobaro_log_syslog_fini(cobaro_loghandle_t lh)
+bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
  {
-     lh->syslog_opened = false;
-     closelog();
- }
+     // Close existing syslog handle if open
+     if (lh->logto == COBARO_LOGTO_SYSLOG) {
+         closelog(); 
+     }
+     lh->f = f;
+     lh->logto = COBARO_LOGTO_FILE;
+
+     return true;
+ }    
+
+bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
+{
+    switch (lh->logto) {
+    case COBARO_LOGTO_SYSLOG:
+        return cobaro_log_to_syslog(lh, log);
+    case COBARO_LOGTO_FILE:
+        return cobaro_log_to_file(lh, log, lh->f);
+    }
+
+    return false;
+}
 
  bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
  {
@@ -215,7 +249,7 @@ typedef struct cobaro_loghandle {
          return true;
      }
 
-     if (!lh->syslog_opened) {
+     if (lh->logto != COBARO_LOGTO_SYSLOG) {
          return false;
      }
 
