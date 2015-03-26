@@ -45,7 +45,7 @@ typedef struct cobaro_loghandle {
          abort();
      }
      lh->syslog_opened = false;
-     lh->level = LOG_NOTICE; // By default
+     lh->level = LOG_INFO; // By default
      lh->messages = messages;
      
      return lh;

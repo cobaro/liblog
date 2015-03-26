@@ -232,7 +232,7 @@ void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 ///     loghandle in use
 ///
 /// @param[in] level
-///    level to log below, see man (3) syslog. Default: LOG_NOTICE
+///    level to log below, see man (3) syslog. Default: LOG_INFO
 ///
 /// @returns
 ///    true on success, false on failure
