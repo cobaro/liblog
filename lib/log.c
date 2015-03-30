@@ -9,6 +9,26 @@ COPYRIGHT_END
 #include "config.h"
 #include "cobaro-log0/log.h"
 
+#if defined(HAVE_ARPA_INET_H)
+# include <arpa/inet.h>
+#endif
+
+#if defined(HAVE_PTHREAD_H)
+# include <pthread.h>
+#endif
+
+#if defined(HAVE_NETINET_IN_H)
+# include <netinet/in.h>
+#endif
+
+#if defined(HAVE_SYSLOG_H)
+# include <syslog.h>
+#endif
+
+#if defined(HAVE_SYS_TIME_H)
+#  include <sys/time.h>
+#endif
+
 #define COBARO_LOG_SLOTS (16) // Keep it small as we have limited cache
 
 /// Valid logging destinations

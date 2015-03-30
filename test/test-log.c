@@ -11,6 +11,22 @@ COPYRIGHT_END
 #include "greatest.h"
 #include "messages.h"
 
+#if defined(HAVE_PTHREAD_H)
+# include <pthread.h>
+#endif
+
+#if defined(HAVE_SYSLOG_H)
+# include <syslog.h>
+#endif
+
+#if defined(HAVE_SYS_TIME_H)
+#  include <sys/time.h>
+#endif
+
+#if defined(HAVE_UNISTD_H)
+#  include <unistd.h>
+#endif
+
 #define SEND_COUNT (1000)
 #define NUM_PRODUCERS (4)
 

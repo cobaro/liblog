@@ -9,60 +9,15 @@ All rights reserved.
 COPYRIGHT_END
 ****************************************************************/
 
-#if defined(HAVE_ARPA_INET_H)
-# include <arpa/inet.h>
-#endif
-
-#if defined(HAVE_PTHREAD_H)
-# include <pthread.h>
-#endif
-
-#if defined(HAVE_NETINET_IN_H)
-# include <netinet/in.h>
-#endif
-
-#if defined(HAVE_STDARG_H)
+// All available in c99
 # include <stdarg.h>
-#endif
-
-#if defined(HAVE_STDBOOL_H)
 # include <stdbool.h>
-#endif
-
-#if defined(HAVE_STDIO_H)
 # include <stdio.h>
-#endif
-
-#if defined(HAVE_STDINT_H)
 # include <stdint.h>
-#endif
-
-#if defined(HAVE_STDLIB_H)
 # include <stdlib.h>
-#endif
-
-#if defined(HAVE_STRING_H)
 # include <string.h>
-#endif
-
-#if defined(HAVE_SYSLOG_H)
-# include <syslog.h>
-#endif
-
-#if defined(TIME_WITH_SYS_TIME)
-# include <sys/time.h>
 # include <time.h>
-#else
-# if defined(HAVE_SYS_TIME_H)
-#   include <sys/time.h>
-# else
-#   include <time.h>
-# endif
-#endif
 
-#if defined(HAVE_UNISTD_H)
-# include <unistd.h>
-#endif
 
 /// Type discriminator for parameter values in logs.
 enum cobaro_log_types {
