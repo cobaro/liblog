@@ -16,8 +16,9 @@ SUBDIRS = \
 package: dist
 if RUN_RPMBUILD
 	(cd packages/rpm; make rpm)
-else
-	echo "No packaging configured"
+endif
+if RUN_DEBUILD
+	(cd packages/deb; make deb)
 endif
 
 EXTRA_DIST = \

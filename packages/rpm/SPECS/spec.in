@@ -51,7 +51,7 @@ This package provides the development files for @PACKAGE@, a code instrumentatio
 # Normally we would use RPM_OPT_FLAGS here (see /usr/lib/rpm/rpmrc)
 # but we're going for optimization in a large way
 %build
-./configure CFLAGS="@RPM_CFLAGS@" --prefix=%{prefix} --libdir=%{_libdir} --sysconfdir=%{_sysconfdir}  --infodir=%{_infodir} --mandir=%{_mandir} --datadir=%{_datadir} --docdir=%{_docdir}/@PACKAGE@-@VERSION@ 
+./configure CFLAGS="@PKG_CFLAGS@" --prefix=%{prefix} --libdir=%{_libdir} --sysconfdir=%{_sysconfdir}  --infodir=%{_infodir} --mandir=%{_mandir} --datadir=%{_datadir} --docdir=%{_docdir}/@PACKAGE@-@VERSION@ 
 %__make
 
 ################################################################

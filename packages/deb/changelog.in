@@ -1,0 +1,9 @@
+@PACKAGE@ (@VERSION@) unstable; urgency=low
+
+  * Current Release
+
+ -- cobaro.org <support@cobaro.org>  Tue, 31 Mar 2015 00:00:00 +0000
+
+Local variables:
+mode: debian-changelog
+End:  

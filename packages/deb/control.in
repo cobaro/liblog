@@ -1,0 +1,16 @@
+Source: @PACKAGE@
+Section: development
+Priority: optional
+Maintainer: cobaro.org <support@cobaro.org>
+
+Package: @PACKAGE@-dev
+Architecture: any
+Depends: @PACKAGE@  (= ${Source-Version})
+Description: Cobaro Log library
+ This package installs developer files for Cobaro's logging library
+
+Package: @PACKAGE@
+Architecture: any
+Depends: 
+Description: Cobaro Log library
+ This package installs runtime files for Cobaro's logging library

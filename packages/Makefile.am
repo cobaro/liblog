@@ -4,6 +4,7 @@
 # COPYRIGHT_END
 
 SUBDIRS = \
+    deb \
 	rpm
 
 pkgconfigdir = $(libdir)/pkgconfig
