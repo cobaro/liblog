@@ -6,11 +6,11 @@
 AC_INIT([libcobaro-log0], [1.0.0], [bill@cobaro.org])
 
 AC_CONFIG_SRCDIR(lib/cobaro-log0/log.h)
-AC_PREREQ(2.68)
+AC_PREREQ(2.63)
 AM_INIT_AUTOMAKE([-Wall, -Werror foreign])
 AM_CONFIG_HEADER(lib/config.h)
 
-AM_PROG_AR
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR]) dnl Workaround for old automake
 
 LT_INIT()
 
