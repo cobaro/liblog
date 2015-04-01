@@ -37,7 +37,7 @@ enum cobaro_logto_t {
     COBARO_LOGTO_SYSLOG
 };
 
-typedef struct cobaro_loghandle {
+struct cobaro_loghandle {
     cobaro_log_t free;       // free logs
     cobaro_log_t busy;       // currently used logs
     pthread_spinlock_t lock; // locking
@@ -48,7 +48,7 @@ typedef struct cobaro_loghandle {
     FILE *f;                 // if logging to file
 
     cobaro_log_t blocks;     // memory for cleanup on exit
- } *cobaro_loghandle_t;
+};
 
  // Per-thread
  cobaro_loghandle_t cobaro_log_init(char **messages)
