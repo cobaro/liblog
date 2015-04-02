@@ -13,7 +13,7 @@ edit = sed \
 	-e 's,@PACKAGE\@,$(PACKAGE),g' \
 	-e 's,@VERSION\@,$(VERSION),g' \
 	-e 's,@RPM_BUILD_ROOT\@,$(RPM_BUILD_ROOT),g' \
-	-e 's,@RPM_CFLAGS\@,$(RPM_CFLAGS),g'
+	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g'
 
 spec: spec.in
 	rm -f spec spec.tmp

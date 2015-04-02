@@ -34,8 +34,8 @@ LIBS="$PTHREAD_LIBS $LIBS"
 
 ## Packaging
 # See packages/rpm/spec.in for how this is glued together
-PKG="-std=gnu99 -Wall -Werror -O2 -pipe -mtune=generic -DNDEBUG"
-AC_SUBST(PKG_CFLAGS)
+PACKAGE_CFLAGS="-std=gnu99 -Wall -Werror -O2 -pipe -mtune=generic -DNDEBUG"
+AC_SUBST(PACKAGE_CFLAGS)
 
 # RPM Settings
 AC_PATH_PROG([RPMBUILD], [rpmbuild], [no])
