@@ -121,6 +121,17 @@ struct cobaro_loghandle {
      return log;
  }
 
+void cobaro_log_set_string(cobaro_log_t log, int argnum, const char *source)
+{
+    // 'argnum' is the %n number, which is 1-based; index is for the
+    // array, which is 0-based, so convert here once, and use index
+    // hereafter.
+    int index = argnum - 1;
+    log->p[index].type = COBARO_STRING;
+    strncpy(log->p[index].s, source, sizeof(log->p[index].s));
+    log->p[index].s[sizeof(log->p[index].s) - 1] = '\0';
+}
+
  void cobaro_log_publish(cobaro_loghandle_t lh, cobaro_log_t log)
  {
      int ret;

@@ -110,7 +110,10 @@ typedef struct cobaro_log {
 // log->p[0].type  is the type of the value.
 // log->p[0].s     is a reference to a string value.
 
+
+/// Log handle type.
 typedef struct cobaro_loghandle *cobaro_loghandle_t;
+
 
 /// Initialize the logging infrastructure
 ///
@@ -154,6 +157,19 @@ void cobaro_log_fini(cobaro_loghandle_t lh);
 ///    NOTE: This may return NULL in which case you are unable to log
 ///          temporarily. This is to ensure we never block and is by design.
 cobaro_log_t cobaro_log_claim(cobaro_loghandle_t lh);
+
+/// Helper function for setting a string parameter.
+///
+/// Ensures that the string is copied and terminated properly in a
+/// single line of code, rather than three.
+///
+/// @param[in] log
+///    Log structure to populate.
+/// @param[in] argnum
+///    Argument number (as in, %n, being array index + 1).
+/// @param[in] source
+///    C-string to copy to log structure's parameters.
+void cobaro_log_set_string(cobaro_log_t log, int argnum, const char *source);
 
 /// Publish a log_t relinqushing it's memory.
 ///
