@@ -359,6 +359,13 @@ bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
             written++;
         }
     }
+
+    // Make sure output is terminated.
+    if (written < s_len) {
+        s[written] = '\0';
+    } else{
+        s[s_len - 1] = '\0';
+    }
     
     return true;
 }
