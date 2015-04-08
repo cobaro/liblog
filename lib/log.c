@@ -293,15 +293,15 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
      return true;
  }
 
- bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
-                           char *s, size_t s_len)
- {
-     size_t written = 0;
-     char *format_i18n;
-     int arg;
-     char addr[INET_ADDRSTRLEN];
+bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
+                          char *s, size_t s_len)
+{
+    size_t written = 0;
+    char *format_i18n;
+    int arg;
+    char addr[INET_ADDRSTRLEN];
 
-     if (!(format_i18n = lh->messages[log->code])) {
+    if (!(format_i18n = lh->messages[log->code])) {
         return false;
     }
 
