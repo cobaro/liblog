@@ -8,8 +8,8 @@ All rights reserved.
 COPYRIGHT_END
 ****************************************************************/
 
-/// To add a new message you should it's identifier here and then
-/// and content for the language definitions in messages.c
+/// To add a new message you should add its identifier here and then
+/// add content for the language definitions in messages.c.
 
 /// Enumeration of message identifiers 
 ///
