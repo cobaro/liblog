@@ -83,6 +83,7 @@ void *producer_main(void *rock)
     fprintf(stderr,"Sent %d, looped %d\n", sent, loopcount);
     pthread_exit(rock);
 }
+
 GREATEST_TEST log_size() {
     struct cobaro_log log;
     
