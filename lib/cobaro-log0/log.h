@@ -10,13 +10,13 @@ COPYRIGHT_END
 ****************************************************************/
 
 // All available in c99
-# include <stdarg.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <string.h>
-# include <time.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 
 /// Type discriminator for parameter values in logs.
@@ -30,63 +30,76 @@ enum cobaro_log_types {
     /// Value is a double.
     COBARO_REAL = 3,
 
-    /// Value is an IP address (in 32 bit network format)
+    /// Value is an IP address (in 32 bit network format).
     COBARO_IPV4 = 4
 };
 
-/// Loglevels as they come from syslog
+
+/// Loglevels as they come from syslog.
 enum cobaro_log_levels {
-    /* system is unusable */
+    /// System is unusable.
     COBARO_LOG_EMERG = 0,
 
-    /* action must be taken immediately */
+    /// Action must be taken immediately.
     COBARO_LOG_ALERT,
 
-    /* critical conditions */
+    /// Critical conditions.
     COBARO_LOG_CRIT,
 
-    /* error conditions */
+    /// Error conditions.
     COBARO_LOG_ERR,
 
-    /* warning conditions */
+    /// Warning conditions.
     COBARO_LOG_WARNING,
 
-    /* normal but significant condition */
+    /// Normal but significant condition.
     COBARO_LOG_NOTICE,
 
-    /* informational */
+    /// Informational.
     COBARO_LOG_INFO,
 
-    /* debug-level messages */
+    /// Debug-level messages.
     COBARO_LOG_DEBUG,
 
-    /* iterator useful. */
+    /// Iterator useful.
     COBARO_LOG_LEVELS_COUNT
 };
 
 
+/// Number of parameters in a log message structure.
 #define COBARO_LOG_PARAM_MAX (8) // Search log.c for PARAM_MAX_FIX if changed
+
 
 /// Log information structure.
 ///
-/// Can carry an log code, plus four parameters of arbitrary types.
+/// Can carry an log code, plus eight parameters of variant types.
 typedef struct cobaro_log {
-    // Queue
-    struct cobaro_log *next;
+    /// Header.
+    ///
+    /// For use in identifying this object as a log message, when
+    /// multiple structure types are eg. delivered via the same queue.
+    uint32_t id;
 
     /// Log code.  Zero is successful.
     uint32_t code;
 
-    /// Value type discriminant.
+    // Queue.
+    struct cobaro_log *next;
+
+    /// Log level, from cobaro_log_levels enumeration.
     uint8_t level;
 
-    // make us fit into 512 bytes exactly
-    char pad[48];
+    // 3 spare bytes here.
+
+    // Make us fit into 512 bytes exactly.
+    char pad[44];
 
     /// Array of parameters relevant to this log.
     struct {
         /// Value type discriminant.
         uint8_t type;
+
+        // 7 spare bytes here.
 
         /// Value
         union {
