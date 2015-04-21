@@ -36,6 +36,8 @@ LIBS="$PTHREAD_LIBS $LIBS"
 # See packages/rpm/spec.in for how this is glued together
 PACKAGE_CFLAGS="-std=gnu99 -Wall -Werror -O2 -pipe -mtune=generic -DNDEBUG"
 AC_SUBST(PACKAGE_CFLAGS)
+PACKAGE_CONFIGURE="--enable-shared --enable-static"
+AC_SUBST(PACKAGE_CONFIGURE)
 
 # RPM Settings
 AC_PATH_PROG([RPMBUILD], [rpmbuild], [no])

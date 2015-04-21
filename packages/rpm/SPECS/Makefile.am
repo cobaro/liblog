@@ -13,9 +13,10 @@ edit = sed \
 	-e 's,@PACKAGE\@,$(PACKAGE),g' \
 	-e 's,@VERSION\@,$(VERSION),g' \
 	-e 's,@RPM_BUILD_ROOT\@,$(RPM_BUILD_ROOT),g' \
-	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g'
+	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g' \
+	-e 's,@PACKAGE_CONFIGURE\@,$(PACKAGE_CONFIGURE),g'
 
-spec: spec.in
+spec: spec.in $(top_srcdir)/configure.ac
 	rm -f spec spec.tmp
 	$(edit) $(srcdir)/spec.in >spec.tmp
 	mv spec.tmp spec

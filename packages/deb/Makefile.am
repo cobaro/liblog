@@ -3,7 +3,6 @@
 # All rights reserved.
 # COPYRIGHT_END
 
-EXTRA_DIST = changelog.in control.in rules.in
 
 .PHONY: clean deb
 
@@ -14,22 +13,20 @@ deb: rules control changelog
 edit = sed \
 	-e 's,@PACKAGE\@,$(PACKAGE),g' \
 	-e 's,@VERSION\@,$(VERSION),g' \
-	-e 's,@PACKAGE_CONFIG_OPTS\@,$(PACKAGE_CONFIG_OPTS),g'
+	-e 's,@PACKAGE_CONFIGURE\@,$(PACKAGE_CONFIGURE),g' \
+	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g'
 
 changelog: changelog.in
-	rm -f changelog changelog.tmp
-	$(edit) $(srcdir)/changelog.in >changelog.tmp
-	mv changelog.tmp changelog
+	$(edit) $(srcdir)/changelog.in >changelog
 
 control: control.in
-	rm -f control control.tmp
-	$(edit) $(srcdir)/control.in >control.tmp
-	mv control.tmp control
+	$(edit) $(srcdir)/control.in >control
 
 rules: rules.in
-	rm -f rules rules.tmp
-	$(edit) $(srcdir)/rules.in >rules.tmp
-	mv rules.tmp rules
+	$(edit) $(srcdir)/rules.in >rules
 
-
-
+EXTRA_DIST = \
+    changelog.in \
+    control.in \
+    rules.in \
+    compat

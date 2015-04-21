@@ -15,3 +15,7 @@ libcobaro_log0_la_SOURCES = \
 
 AM_CPPFLAGS = \
 	@CPPFLAGS@
+
+# CURRENT:REVISION:AGE
+libcobaro_log0_la_LDFLAGS = \
+	-version-info=1:0:0
