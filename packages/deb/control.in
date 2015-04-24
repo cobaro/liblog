@@ -5,7 +5,7 @@ Maintainer: cobaro.org <support@cobaro.org>
 
 Package: @PACKAGE@-dev
 Architecture: any
-Depends: @PACKAGE@  (= ${Source-Version})
+Depends: 
 Description: Cobaro Log library
  This package installs developer files for Cobaro's logging library
 

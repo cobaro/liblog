@@ -3,3 +3,4 @@ rules
 control
 files
 libcobaro-log0*
+tmp
