@@ -184,7 +184,37 @@ cobaro_log_t cobaro_log_claim(cobaro_loghandle_t lh);
 ///    C-string to copy to log structure's parameters.
 void cobaro_log_set_string(cobaro_log_t log, int argnum, const char *source);
 
-/// Publish a log_t relinqushing it's memory.
+/// Helper function for setting an integer parameter.
+///
+/// @param[in] log
+///    Log structure to populate.
+/// @param[in] argnum
+///    Argument number (as in, %n, being array index + 1).
+/// @param[in] source
+///    Integer value to set.
+void cobaro_log_set_integer(cobaro_log_t log, int argnum, int64_t source);
+
+/// Helper function for setting an double parameter.
+///
+/// @param[in] log
+///    Log structure to populate.
+/// @param[in] argnum
+///    Argument number (as in, %n, being array index + 1).
+/// @param[in] source
+///    Double/real value to set.
+void cobaro_log_set_double(cobaro_log_t log, int argnum, double source);
+
+/// Helper function for setting an IPv4 parameter.
+///
+/// @param[in] log
+///    Log structure to populate.
+/// @param[in] argnum
+///    Argument number (as in, %n, being array index + 1).
+/// @param[in] source
+///    IPv4 address, in **host** byte order.
+void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t source);
+
+/// Publish a log_t relinqushing its memory.
 ///
 /// @param[in] lh
 ///     loghandle to publish to

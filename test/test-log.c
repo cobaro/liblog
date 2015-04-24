@@ -92,6 +92,60 @@ GREATEST_TEST log_size() {
     GREATEST_PASS();
 }
 
+GREATEST_TEST test_set_string() {
+    struct cobaro_log log;
+    const char *source = "abc";
+    char dest[256] = "";
+
+    log.code = COBARO_TEST_MESSAGE_NULL;
+    log.level = COBARO_LOG_WARNING;
+    cobaro_log_set_string(&log, 1, source);
+
+    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, sizeof(dest)));
+    GREATEST_ASSERT_STR_EQ(source, dest);
+    GREATEST_ASSERT_FALSE(cobaro_log_to_string(lh, &log, dest, (size_t)2));
+    GREATEST_PASS();
+}
+
+GREATEST_TEST test_set_integer() {
+    struct cobaro_log log;
+    char dest[256] = "";
+
+    log.code = COBARO_TEST_MESSAGE_NULL;
+    log.level = COBARO_LOG_WARNING;
+    cobaro_log_set_integer(&log, 1, 42);
+
+    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, sizeof(dest)));
+    GREATEST_ASSERT_STR_EQ("42", dest);
+    GREATEST_PASS();
+}
+
+GREATEST_TEST test_set_double() {
+    struct cobaro_log log;
+    char dest[256] = "";
+
+    log.code = COBARO_TEST_MESSAGE_NULL;
+    log.level = COBARO_LOG_WARNING;
+    cobaro_log_set_double(&log, 1, 3.14159);
+
+    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, sizeof(dest)));
+    GREATEST_ASSERT_STR_EQ("3.14159", dest);
+    GREATEST_PASS();
+}
+
+GREATEST_TEST test_set_ipv4() {
+    struct cobaro_log log;
+    char dest[256] = "";
+
+    log.code = COBARO_TEST_MESSAGE_NULL;
+    log.level = COBARO_LOG_WARNING;
+    cobaro_log_set_ipv4(&log, 1, 0x0708090aul);
+
+    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, sizeof(dest)));
+    GREATEST_ASSERT_STR_EQ("10.9.8.7", dest);
+    GREATEST_PASS();
+}
+
 GREATEST_TEST log_communication() {
     pthread_t thread[NUM_PRODUCERS + 1]; 
     pthread_attr_t attr;
@@ -187,6 +241,10 @@ GREATEST_SUITE(cobaro_test_log) {
     SET_TEARDOWN(teardown_cb, NULL);
 
     GREATEST_RUN_TEST(log_size);
+    GREATEST_RUN_TEST(test_set_string);
+    GREATEST_RUN_TEST(test_set_integer);
+    GREATEST_RUN_TEST(test_set_double);
+    GREATEST_RUN_TEST(test_set_ipv4);
     GREATEST_RUN_TEST(log_messages);
     GREATEST_RUN_TEST(log_communication);
 }

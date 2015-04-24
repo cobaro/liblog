@@ -132,6 +132,27 @@ void cobaro_log_set_string(cobaro_log_t log, int argnum, const char *source)
     log->p[index].s[sizeof(log->p[index].s) - 1] = '\0';
 }
 
+void cobaro_log_set_integer(cobaro_log_t log, int argnum, int64_t source)
+{
+    int index = argnum - 1;
+    log->p[index].type = COBARO_INTEGER;
+    log->p[index].i = source;
+}
+
+void cobaro_log_set_double(cobaro_log_t log, int argnum, double source)
+{
+    int index = argnum - 1;
+    log->p[index].type = COBARO_REAL;
+    log->p[index].f = source;
+}
+
+void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
+{
+    int index = argnum - 1;
+    log->p[index].type = COBARO_IPV4;
+    log->p[index].ipv4 = ipv4;
+}
+
  void cobaro_log_publish(cobaro_loghandle_t lh, cobaro_log_t log)
  {
      int ret;
