@@ -49,6 +49,19 @@ AC_SUBST(RPM_BUILD_ROOT)
 AC_PATH_PROG([DEBUILD], [debuild], [no])
 AM_CONDITIONAL(RUN_DEBUILD, test "x$DEBUILD" != xno)
 
+# Library version numbering see:
+#  http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+# The rules are:
+#  Before a release if any source code change, then bump REVISION
+#  Interface addition only, then increment AGE
+#  Interface changes, then increment CURRENT, set REVISION and AGE to 0
+LIB_CURRENT=1
+LIB_REVISION=0
+LIB_AGE=0
+LIB_VERSION=$LIB_CURRENT:$LIB_REVISION:$LIB_AGE
+AC_DEFINE_UNQUOTED(LIB_VERSION, "$LIB_VERSION", [lib C:R:A])
+AC_SUBST(LIB_VERSION)
+
 
 # Header files we need to know about
 AC_CHECK_HEADERS(\

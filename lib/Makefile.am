@@ -13,9 +13,9 @@ libcobaro_log0_la_HEADERS = \
 libcobaro_log0_la_SOURCES = \
 	log.c
 
+libcobaro_log0_la_LDFLAGS = \
+	-version-info @LIB_VERSION@
+
 AM_CPPFLAGS = \
 	@CPPFLAGS@
 
-# CURRENT:REVISION:AGE
-libcobaro_log0_la_LDFLAGS = \
-	-version-info=1:0:0
