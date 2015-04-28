@@ -88,6 +88,7 @@ rmdir --ignore-fail-on-non-empty %{prefix}/include/cobaro-log0
 %attr(644,root,root) %{prefix}/include/cobaro-log0/*.h
 %attr(644,root,root) %{_libdir}/@PACKAGE@.a
 %attr(644,root,root) %{_libdir}/@PACKAGE@.la
+%attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/LICENSE.txt
 
 %clean
 echo cleaning up $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
