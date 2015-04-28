@@ -28,7 +28,10 @@ if RUN_DEBUILD
 	rm -rf $(PACKAGE)-$(VERSION))
 endif
 
+doc_DATA = \
+	LICENSE.txt
+
 EXTRA_DIST = \
+	$(doc_DATA) \
 	bootstrap \
-	LICENSE.txt \
 	README.rst

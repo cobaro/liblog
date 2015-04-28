@@ -42,13 +42,14 @@ binary-arch: build install
 # runtime files with all else going into the dev package.
 	dh_movefiles -p@PACKAGE@ \
 		usr/lib/@PACKAGE@.so \
-		usr/lib/@PACKAGE@.so.0 \
-		usr/lib/@PACKAGE@.so.0.0.0
+		usr/lib/@PACKAGE@.so.@LIB_CURRENT@ \
+		usr/lib/@PACKAGE@.so.@LIB_CURRENT@.@LIB_AGE@.@LIB_REVISION@
 	dh_movefiles -p@PACKAGE@-dev \
 		usr/lib/@PACKAGE@.a \
 		usr/lib/@PACKAGE@.la \
 		usr/lib/pkgconfig/@PACKAGE@.pc \
-		usr/include/cobaro-log0
+		usr/include/cobaro-log0 \
+		usr/share/doc/libcobaro-log0
 #	dh_installdebconf	
 	dh_installdocs
 	dh_installexamples

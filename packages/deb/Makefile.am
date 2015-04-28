@@ -14,7 +14,10 @@ edit = sed \
 	-e 's,@PACKAGE\@,$(PACKAGE),g' \
 	-e 's,@VERSION\@,$(VERSION),g' \
 	-e 's,@PACKAGE_CONFIGURE\@,$(PACKAGE_CONFIGURE),g' \
-	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g'
+	-e 's,@PACKAGE_CFLAGS\@,$(PACKAGE_CFLAGS),g' \
+	-e 's,@LIB_CURRENT\@,$(LIB_CURRENT),g' \
+	-e 's,@LIB_REVISION\@,$(LIB_REVISION),g' \
+	-e 's,@LIB_AGE\@,$(LIB_AGE),g'
 
 changelog: changelog.in
 	$(edit) $(srcdir)/changelog.in >changelog
