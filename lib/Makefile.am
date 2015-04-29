@@ -9,9 +9,6 @@ lib_LTLIBRARIES = libcobaro-log0.la
 
 libcobaro_log0_ladir = $(includedir)/libcobaro-log0
 
-libcobaro_log0_la_HEADERS = \
-	libcobaro-log0/log.h
-
 libcobaro_log0_la_SOURCES = \
 	log.c
 
