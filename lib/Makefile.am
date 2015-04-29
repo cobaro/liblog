@@ -3,6 +3,8 @@
 # All rights reserved.
 # COPYRIGHT_END
 
+SUBDIRS = cobaro-log0
+
 lib_LTLIBRARIES = libcobaro-log0.la
 
 libcobaro_log0_ladir = $(includedir)/cobaro-log0

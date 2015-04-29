@@ -65,7 +65,6 @@ AC_SUBST(LIB_REVISION)
 AC_SUBST(LIB_AGE)
 AC_SUBST(LIB_VERSION)
 
-
 # Header files we need to know about
 AC_CHECK_HEADERS(\
  arpa/inet.h \
@@ -92,6 +91,12 @@ else
 fi
 AM_CONDITIONAL(RUN_VALGRIND, test "x$VALGRIND" != xno)
 
+# Documentation
+
+# See if doxygen is available
+AC_PATH_PROG([DOXYGEN], [doxygen], [echo])
+AM_CONDITIONAL(RUN_DOXYGEN, test "x$DOXYGEN" != xecho)
+
 # See if sphinx-build is available
 AC_PATH_PROG([SPHINXBUILD], [sphinx-build], [echo])
 AM_CONDITIONAL(RUN_SPHINX_BUILD, test "x$SPHINXBUILD" != xecho)
@@ -101,6 +106,7 @@ AC_CONFIG_FILES([
  Makefile
  doc/Makefile
  lib/Makefile
+ lib/cobaro-log0/Makefile
  m4/Makefile
  packages/Makefile
  packages/libcobaro-log0.pc
