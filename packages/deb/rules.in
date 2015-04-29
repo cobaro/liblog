@@ -48,8 +48,8 @@ binary-arch: build install
 		usr/lib/@PACKAGE@.a \
 		usr/lib/@PACKAGE@.la \
 		usr/lib/pkgconfig/@PACKAGE@.pc \
-		usr/include/cobaro-log0 \
-		usr/share/doc/libcobaro-log0
+		usr/include/@PACKAGE@ \
+		usr/share/doc/@PACKAGE@
 #	dh_installdebconf	
 	dh_installdocs
 	dh_installexamples

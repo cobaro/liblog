@@ -7,7 +7,7 @@ COPYRIGHT_END
 ****************************************************************/
 
 #include "config.h"
-#include "cobaro-log0/log.h"
+#include "libcobaro-log0/log.h"
 #include "greatest.h"
 #include "messages.h"
 

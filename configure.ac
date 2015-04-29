@@ -5,7 +5,7 @@
 
 AC_INIT([libcobaro-log0], [1.0.0], [bill@cobaro.org])
 
-AC_CONFIG_SRCDIR(lib/cobaro-log0/log.h)
+AC_CONFIG_SRCDIR(lib/libcobaro-log0/log.h)
 AC_PREREQ(2.63)
 AM_INIT_AUTOMAKE([-Wall, -Werror foreign])
 AM_CONFIG_HEADER(lib/config.h)
@@ -106,7 +106,7 @@ AC_CONFIG_FILES([
  Makefile
  doc/Makefile
  lib/Makefile
- lib/cobaro-log0/Makefile
+ lib/libcobaro-log0/Makefile
  m4/Makefile
  packages/Makefile
  packages/libcobaro-log0.pc

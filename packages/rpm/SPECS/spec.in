@@ -71,7 +71,7 @@ This package provides the development files for @PACKAGE@, a code instrumentatio
 /sbin/ldconfig
 
 %postun devel
-rmdir --ignore-fail-on-non-empty %{prefix}/include/cobaro-log0
+rmdir --ignore-fail-on-non-empty %{prefix}/include/@PACKAGE@
 
 ################################################################
 # So now we need to say what goes where
@@ -85,7 +85,7 @@ rmdir --ignore-fail-on-non-empty %{prefix}/include/cobaro-log0
 %defattr(755,root,root)
 %{_libdir}/@PACKAGE@.so
 %{_libdir}/pkgconfig/@PACKAGE@.pc
-%attr(644,root,root) %{prefix}/include/cobaro-log0/*.h
+%attr(644,root,root) %{prefix}/include/@PACKAGE@/*.h
 %attr(644,root,root) %{_libdir}/@PACKAGE@.a
 %attr(644,root,root) %{_libdir}/@PACKAGE@.la
 %attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/LICENSE.txt

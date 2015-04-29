@@ -7,7 +7,7 @@ COPYRIGHT_END
 ****************************************************************/
 
 #include "config.h"
-#include "cobaro-log0/log.h"
+#include "libcobaro-log0/log.h"
 
 #if defined(HAVE_ARPA_INET_H)
 # include <arpa/inet.h>
