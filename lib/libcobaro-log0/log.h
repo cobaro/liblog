@@ -18,6 +18,7 @@ COPYRIGHT_END
 #include <string.h>
 #include <time.h>
 
+/// @file
 
 /// Type discriminator for parameter values in logs.
 enum cobaro_log_types {
@@ -72,7 +73,7 @@ enum cobaro_log_levels {
 
 /// Log information structure.
 ///
-/// Can carry an log code, plus eight parameters of variant types.
+/// Can carry a log code, plus COBARO_LOG_PARAM_MAX parameters of variant types.
 typedef struct cobaro_log {
     /// Header.
     ///
@@ -83,7 +84,7 @@ typedef struct cobaro_log {
     /// Log code.  Zero is successful.
     uint32_t code;
 
-    // Queue.
+    /// Queue.
     struct cobaro_log *next;
 
     /// Log level, from cobaro_log_levels enumeration.
@@ -91,7 +92,7 @@ typedef struct cobaro_log {
 
     // 3 spare bytes here.
 
-    // Make us fit into 512 bytes exactly.
+    /// Pad to make us fit into 512 bytes exactly.
     char pad[44];
 
     /// Array of parameters relevant to this log.
@@ -287,7 +288,7 @@ bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 ///
 /// @returns
 ///    true on success, false on failure
-bool cobaro_log_file_set(cobaro_loghandle_t, FILE *f);
+bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f);
 
 /// Set the log 
 /// syslog handle remains open until we switch to a file, call
@@ -302,9 +303,12 @@ bool cobaro_log_file_set(cobaro_loghandle_t, FILE *f);
 /// @param[in] option
 ///     option flags, see man (3) syslog
 ///
+/// @param[in] facility
+///     syslog facility,  see man (3) syslog
+///
 /// @returns
 ///    true on success, false on failure
-bool cobaro_log_syslog_set(cobaro_loghandle_t, char *ident,
+bool cobaro_log_syslog_set(cobaro_loghandle_t lh, char *ident,
                            int option, int facility);
 
 /// Log a message to syslog
@@ -332,7 +336,7 @@ bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 /// @param[in,out] s
 ///     pre-allocated string for messages to be formatted in to
 ///
-/// @param[in]
+/// @param[in] s_len
 ///    length of s
 ///
 /// @returns
