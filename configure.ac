@@ -107,6 +107,7 @@ AC_CONFIG_FILES([
  doc/Makefile
  lib/Makefile
  lib/libcobaro-log0/Makefile
+ lib/libcobaro-log0/Doxyfile
  m4/Makefile
  packages/Makefile
  packages/libcobaro-log0.pc

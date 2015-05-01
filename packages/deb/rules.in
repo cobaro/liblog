@@ -43,7 +43,8 @@ binary-arch: build install
 	dh_movefiles -p@PACKAGE@ \
 		usr/lib/@PACKAGE@.so \
 		usr/lib/@PACKAGE@.so.@LIB_CURRENT@ \
-		usr/lib/@PACKAGE@.so.@LIB_CURRENT@.@LIB_AGE@.@LIB_REVISION@
+		usr/lib/@PACKAGE@.so.@LIB_CURRENT@.@LIB_AGE@.@LIB_REVISION@ \
+		usr/share/doc/@PACKAGE@/LICENSE.txt
 	dh_movefiles -p@PACKAGE@-dev \
 		usr/lib/@PACKAGE@.a \
 		usr/lib/@PACKAGE@.la \

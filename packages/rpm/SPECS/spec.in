@@ -30,8 +30,8 @@ This package provides the run-time for @PACKAGE@, a code instrumentation library
 %package devel
 Summary: @PACKAGE@ C SDK
 Group: Development/Libraries
-Requires: @PACKAGE@ >= @VERSION@
 Provides: @PACKAGE@-devel
+#Requires: @PACKAGE@ >= @VERSION@
 
 %description devel
 This package provides the development files for @PACKAGE@, a code instrumentation library.
@@ -56,11 +56,10 @@ This package provides the development files for @PACKAGE@, a code instrumentatio
 
 ################################################################
 # So we do the install to and build a list of all the files
+# Note rpmbuild is fussy about .so's so we clean up theversioned ones and let ldconfig make them.
+# rpmbuild is 
 %install
 %__make install prefix=$RPM_BUILD_ROOT/%{prefix} libdir=$RPM_BUILD_ROOT/%{_libdir} sysconfdir=$RPM_BUILD_ROOT/%{sysconfdir} infodir=$RPM_BUILD_ROOT/%{_infodir} mandir=$RPM_BUILD_ROOT/%{_mandir} docdir=$RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@ datadir=$RPM_BUILD_ROOT/%{_datadir}
-# doc
-#%__mkdir -p $RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@
-#%__install $RPM_BUILD_ROOT/%{_docdir}/@PACKAGE@-@VERSION@/t $RPM_BUILD_ROOT/%{_docdir}/$package-@RELEASE@
 
 ################################################################
 # After [de]installation we need to ...
@@ -78,23 +77,22 @@ rmdir --ignore-fail-on-non-empty %{prefix}/include/@PACKAGE@
 
 %files
 %defattr(755,root,root)
-%{_libdir}/@PACKAGE@.so.?
-%{_libdir}/@PACKAGE@.so.?.?.?
+%{_libdir}/@PACKAGE@.so*
+%attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/LICENSE.txt
 
 %files devel
 %defattr(755,root,root)
-%{_libdir}/@PACKAGE@.so
 %{_libdir}/pkgconfig/@PACKAGE@.pc
 %attr(644,root,root) %{prefix}/include/@PACKAGE@/*.h
 %attr(644,root,root) %{_libdir}/@PACKAGE@.a
 %attr(644,root,root) %{_libdir}/@PACKAGE@.la
-%attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/LICENSE.txt
+%attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/Doxygen/*
 
 %clean
 echo cleaning up $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
 test $RPM_BUILD_DIR/@PACKAGE@-@VERSION@ = "/" || %__rm -rf $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
 echo cleaning up $RPM_BUILD_ROOT
-test $RPM_BUILD_ROOT = "/" || %__rm -rf $RPM_BUILD_ROOT
+#test $RPM_BUILD_ROOT = "/" || %__rm -rf $RPM_BUILD_ROOT
 
 ################################################################
 # Emacs settings

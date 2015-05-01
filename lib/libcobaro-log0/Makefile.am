@@ -3,21 +3,48 @@
 # All rights reserved.
 # COPYRIGHT_END
 
-edit = sed \
-	-e s,@RELEASE\@,`date +\%Y\%m\%d`,g \
-	-e 's,@PACKAGE\@,$(PACKAGE),g' \
-	-e 's,@VERSION\@,$(VERSION),g'
-
-Doxyfile: Doxyfile.in $(top_srcdir)/configure.ac
-	echo $@ $<
-	rm -f $@ $@.tmp
-	$(edit) $< >$@.tmp
-	mv $@.tmp $@
-
 libcobaro_log0dir = $(includedir)/libcobaro-log0
 libcobaro_log0_HEADERS = \
 	log.h
 
-doc: $(libcobaro_log0_HEADERS) Doxyfile
-	$(DOXYGEN)
+# Doxygen requires a little work to avoid enumerating files and the
+# autochain isn't particularly set up for it.
+#
+# Note:
+## we need to use DESTDIR for use in packaging and be compliant
+## with make DESTDIR=
+##
+## The chmod/mkdir which works around the distcheck target being done
+## internally with install and read only directories
+##
+## We use a stamp as a target rather than a doc_DATA as that would
+## cause [de]installation to happen twice on any file mentioned there
+##
+## Doxygen might not be installed so we test for RUN_DOXYGEN from configure
 
+htmldocdir = $(docdir)/Doxygen
+
+.doxygen_stamp: Doxyfile $(libcobaro_log0_HEADERS)
+	$(DOXYGEN)
+	touch $@
+
+all-local: .doxygen_stamp
+
+clean-local:
+	rm -rf html latex .doxygen_stamp
+
+install-data-hook:
+if RUN_DOXYGEN
+	rm -rf $(DESTDIR)$(htmldocdir)
+	mkdir -p $(DESTDIR)$(docdir)
+	chmod +w $(DESTDIR)$(docdir)
+	cp -r html $(DESTDIR)$(htmldocdir)
+endif
+
+uninstall-hook:
+if RUN_DOXYGEN
+	rm -rf $(DESTDIR)$(htmldocdir)
+endif
+
+EXTRA_DIST = \
+	Doxyfile.in
