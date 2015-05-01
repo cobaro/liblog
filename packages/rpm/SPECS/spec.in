@@ -92,7 +92,7 @@ rmdir --ignore-fail-on-non-empty %{prefix}/include/@PACKAGE@
 echo cleaning up $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
 test $RPM_BUILD_DIR/@PACKAGE@-@VERSION@ = "/" || %__rm -rf $RPM_BUILD_DIR/@PACKAGE@-@VERSION@
 echo cleaning up $RPM_BUILD_ROOT
-#test $RPM_BUILD_ROOT = "/" || %__rm -rf $RPM_BUILD_ROOT
+test $RPM_BUILD_ROOT = "/" || %__rm -rf $RPM_BUILD_ROOT
 
 ################################################################
 # Emacs settings
