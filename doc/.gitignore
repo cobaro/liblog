@@ -1,2 +1,5 @@
+DeveloperGuide.pdf
 Makefile
 Makefile.in
+_build
+conf.py

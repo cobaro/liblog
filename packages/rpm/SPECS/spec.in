@@ -87,6 +87,7 @@ rmdir --ignore-fail-on-non-empty %{prefix}/include/@PACKAGE@
 %attr(644,root,root) %{_libdir}/@PACKAGE@.a
 %attr(644,root,root) %{_libdir}/@PACKAGE@.la
 %attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/Doxygen/*
+%attr(644,root,root) %{_docdir}/@PACKAGE@-@VERSION@/DeveloperGuide.pdf
 
 %clean
 echo cleaning up $RPM_BUILD_DIR/@PACKAGE@-@VERSION@

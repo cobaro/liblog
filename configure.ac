@@ -105,6 +105,7 @@ AM_CONDITIONAL(RUN_SPHINX_BUILD, test "x$SPHINXBUILD" != xecho)
 AC_CONFIG_FILES([
  Makefile
  doc/Makefile
+ doc/conf.py
  lib/Makefile
  lib/libcobaro-log0/Makefile
  lib/libcobaro-log0/Doxyfile
