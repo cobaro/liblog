@@ -9,7 +9,7 @@ Quickstart
 
 Compiling
 ---------
-See the `Developers Guide <doc/BUILD.rst>`_.
+See the `Developers Guide <doc/DeveloperGuide.rst>`_.
 
 Contributing
 ------------
