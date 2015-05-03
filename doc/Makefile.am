@@ -16,7 +16,6 @@ DeveloperGuide.pdf: DeveloperGuide.rst conf.py
 	echo "yum install python-sphinx texlive texlive-xcolor texlive-collection-xetex texlive-threeparttable texlive-wrapfig texlive-multirow texlive framed")
 
 EXTRA_DIST = \
-	BUILD.rst \
 	DeveloperGuide.rst \
 	conf.py.in
 
