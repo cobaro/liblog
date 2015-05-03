@@ -25,7 +25,7 @@ Binary packages
 ---------------
 Binary packages for a limited number of platforms (typically latest
 ubuntu, redhat, OSC) are available from `cobaro.org
-https://www.cobaro.org//liblog`_.
+<https://www.cobaro.org//liblog>`_.
 
 For redhat and debian based systems the runtime package contains only
 the shared libraries and need only be installed if shared library
@@ -35,7 +35,7 @@ to provide statically linked libraries.
 Building from source
 --------------------
 Source releases can be obtained from `github
-https://github.com/cobaro/liblog`_.
+<https://github.com/cobaro/liblog>`_.
 
 To initialize your build environment following an initial checkout, or
 to reset it for some other reason, you should run the ``bootstrap``
