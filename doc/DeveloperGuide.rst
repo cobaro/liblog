@@ -1,6 +1,3 @@
-..contents:: Table of Contents
-  :depth 2
-
 Developer's Guide
 =========================
 
@@ -24,7 +21,7 @@ Code level documentation is provided via doxygen.
 Binary packages
 ---------------
 Binary packages for a limited number of platforms (typically latest
-ubuntu, redhat, OSC) are available from `cobaro.org
+ubuntu, redhat, OSX) are available from `cobaro.org
 <https://www.cobaro.org//liblog>`_.
 
 For redhat and debian based systems the runtime package contains only
