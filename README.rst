@@ -20,7 +20,7 @@ on how compile and use liblog.
 Contributing
 ------------
 Contributions are welcome via `github
-https://github.com/cobaro/liblog`_.  Please submit proposed changes as
+<https://github.com/cobaro/liblog>`_.  Please submit proposed changes as
 a pull request, or attach a patch to a GitHub issue.
 
 
