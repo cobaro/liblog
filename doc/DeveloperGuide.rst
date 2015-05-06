@@ -21,15 +21,15 @@ Code level documentation is provided via doxygen.
 Compilation and Linkage
 -----------------------
 If you can use pkgconfig, it can provide the correct compilation and
-linkage flags:
+linkage flags::
 
-pkgconfig --cflags libcobaro-log0
-pkgconfig --libs libcobaro-log0
+ pkgconfig --cflags libcobaro-log0
+ pkgconfig --libs libcobaro-log0
 
-To specify things manually is also simple:
+To specify things manually is also simple::
 
--I /usr/local/include -pthread
--L /usr/local/lib -lcobaro-log0 -pthread
+ -I /usr/local/include -pthread
+ -L /usr/local/lib -lcobaro-log0 -pthread
 
 Static vs Dynamic Linkage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,6 +58,7 @@ string-formatting: just to collect the relevant data, and hand it over
 to something else to deal with.
 
 The library is split into two groups of functions:
+
 - Those that create log message.
 - Those that process log messages.
 
@@ -97,12 +98,17 @@ structure; and cobaro_loghandle_t, a formatting infrastructure.
 
 Library
 ~~~~~~~
-cobaro_log_init()
-cobaro_log_fini()
+
+.. code:: C
+
+ cobaro_log_init();
+ cobaro_log_fini();
 
 Message Templates
 ~~~~~~~~~~~~~~~~~
-cobaro_log_messages_set(handle, array)
+.. code:: C
+
+ cobaro_log_messages_set(handle, array);
 
 Creating a Log Message
 ----------------------
@@ -119,15 +125,19 @@ get NULL.
 
 Set the log message code and level:
 
-log->code = MY_APP_LOG_MESSAGE_FOO;
-log->level = MY_APP_LOG_LEVEL_FOO;
+.. code:: C
+
+ log->code = MY_APP_LOG_MESSAGE_FOO;
+ log->level = MY_APP_LOG_LEVEL_FOO;
 
 Set any parameters needed:
 
-cobaro_log_set_string(log, 1, "boom!");
-cobaro_log_set_integer(log, 2, 42);
-cobaro_log_set_double(log, 3, 3.1416);
-cobaro_log_set_ipv4(log, 4, ipaddr);
+.. code:: C
+
+ cobaro_log_set_string(log, 1, "boom!");
+ cobaro_log_set_integer(log, 2, 42);
+ cobaro_log_set_double(log, 3, 3.1416);
+ cobaro_log_set_ipv4(log, 4, ipaddr);
 
 Note that the index parameter in these functions matches the parameter
 number in the template strings: it starts from 1, and is the index
@@ -149,18 +159,24 @@ formatting and reporting via eg. syslog.
 Alternatively, you can use your own inter-thread communications
 channels to hand over the log_t pointer to a service thread.
 
-cobaro_log_publish(handle, log)
+.. code:: C
+
+ cobaro_log_publish(handle, log);
 
 This function queues the provided log structure for processing by
 another thread sharing this handle handle.
 
 The other thread should call
 
-log = cobaro_log_next(handle)
+.. code:: C
+
+ log = cobaro_log_next(handle);
 
 to retrieve log messages from this queue, process them, and then call
 
-cobaro_log_return(handle, log)
+.. code:: C
+
+ cobaro_log_return(handle, log);
 
 to return the structure to the handle's allocation pool (for use by
 future calls to cobaro_log_claim()).
@@ -181,8 +197,10 @@ directly together with the id header to identify this pointer as a log
 message, rather than a control message.  In other cases, it'll be
 necessary to wrap the log_t pointer in a suitable envelope structure.
 
-log->id = MY_APP_LOG_MESSAGE;
-my_queue_append(my_queue, (void *)log)
+.. code:: C
+
+ log->id = MY_APP_LOG_MESSAGE;
+ my_queue_append(my_queue, (void *)log);
 
 Note that in this case you also need to ensure that the memory
 management is taken care of.  The log handle's free list is small (to
@@ -198,12 +216,16 @@ logging system.
 
 In the most simple configuration, you select the target system
 
-cobaro_log_file_set()
-cobaro_log_syslog_set()
+.. code:: C
+
+ cobaro_log_file_set();
+ cobaro_log_syslog_set();
 
 And then call
 
-cobaro_log(handle, log)
+.. code:: C
+
+ cobaro_log(handle, log);
 
 to actually report a log message.
 
@@ -212,15 +234,21 @@ directly.
 
 Logging to File
 ~~~~~~~~~~~~~~~
-cobaro_log_to_file(handle, log)
+.. code:: C
+
+ cobaro_log_to_file(handle, log);
 
 Logging to syslog
 ~~~~~~~~~~~~~~~~~
-cobaro_log_to_syslog(handle, log)
+.. code:: C
+
+ cobaro_log_to_syslog(handle, log);
 
 Logging to String
 ~~~~~~~~~~~~~~~~~
-cobaro_log_to_string(handle, log, buffer, buflen)
+.. code:: C
+
+ cobaro_log_to_string(handle, log, buffer, buflen);
 
 Defining Log Templates
 ----------------------
@@ -263,8 +291,8 @@ References
 ----------
 See also:
 
-Reference Guide (doxygen)
-Install Guide
-README
-github
+- `Reference Guide (doxygen) <https://www.cobaro.org/liblog/doxygen/log_8h.html>`_
+- Install Guide
+- `README <https://github.com/cobaro/liblog/README.rst>`_
+- `github <https://github.com/cobaro/liblog>`_
 
