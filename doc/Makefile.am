@@ -5,8 +5,7 @@
 
 if RUN_SPHINX_BUILD
 doc_DATA = \
-	DeveloperGuide.pdf \
-	install_guide.pdf
+	DeveloperGuide.pdf
 else
 doc_DATA = 
 endif
@@ -16,15 +15,6 @@ DeveloperGuide.pdf: DeveloperGuide.rst conf.py
 	cp _build/latex/DeveloperGuide.pdf . || \
 	(echo "to build the documentation you will need to:"; \
 	echo "yum install python-sphinx texlive texlive-xcolor texlive-collection-xetex texlive-threeparttable texlive-wrapfig texlive-multirow texlive framed")
-
-# FIXME: really need a .pdf:.rst rule here ... (d)
-
-install_guide.pdf: install_guide.rst conf.py
-	$(MAKE) latexpdf && \
-	cp _build/latex/install_guide.pdf . || \
-	(echo "to build the documentation you will need to:"; \
-	echo "yum install python-sphinx texlive texlive-xcolor texlive-collection-xetex texlive-threeparttable texlive-wrapfig texlive-multirow texlive framed")
-
 
 EXTRA_DIST = \
 	DeveloperGuide.rst \
