@@ -229,7 +229,7 @@ Defining Log Templates
 Licensing
 ---------
 Cobaro Log is licensed using the MIT license.  You are free to include
-this code in commercial products, and to modify it as you require.
+this code in commercial products, and to modify it as you require::
 
    MIT License
    -----------
