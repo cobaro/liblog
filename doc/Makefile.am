@@ -18,8 +18,7 @@ DeveloperGuide.pdf: DeveloperGuide.rst conf.py
 
 EXTRA_DIST = \
 	DeveloperGuide.rst \
-	conf.py.in \
-	install_guide.rst
+	conf.py.in
 
 DISTCLEANFILES = $(doc_DATA)
 
