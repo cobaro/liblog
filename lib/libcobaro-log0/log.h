@@ -9,7 +9,7 @@ All rights reserved.
 COPYRIGHT_END
 ****************************************************************/
 
-// All available in c99
+// All available in C99
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -19,50 +19,51 @@ COPYRIGHT_END
 #include <time.h>
 
 /// @file
+/// Light-weight inter-thread log messages.
 
 /// Type discriminator for parameter values in logs.
 enum cobaro_log_types {
-    /// Value is a string.
+    /// @var Value is a string.
     COBARO_STRING = 1,
 
-    /// Value is a signed integer.
+    /// @var Value is a signed integer.
     COBARO_INTEGER = 2,
 
-    /// Value is a double.
+    /// @var Value is a double.
     COBARO_REAL = 3,
 
-    /// Value is an IP address (in 32 bit network format).
+    /// @var Value is an IP address (in 32 bit network format).
     COBARO_IPV4 = 4
 };
 
 
 /// Loglevels as they come from syslog.
 enum cobaro_log_levels {
-    /// System is unusable.
+    /// @var System is unusable.
     COBARO_LOG_EMERG = 0,
 
-    /// Action must be taken immediately.
+    /// @var Action must be taken immediately.
     COBARO_LOG_ALERT,
 
-    /// Critical conditions.
+    /// @var Critical conditions.
     COBARO_LOG_CRIT,
 
-    /// Error conditions.
+    /// @var Error conditions.
     COBARO_LOG_ERR,
 
-    /// Warning conditions.
+    /// @varWarning conditions.
     COBARO_LOG_WARNING,
 
-    /// Normal but significant condition.
+    /// @var Normal but significant condition.
     COBARO_LOG_NOTICE,
 
-    /// Informational.
+    /// @var Informational.
     COBARO_LOG_INFO,
 
-    /// Debug-level messages.
+    /// @var Debug-level messages.
     COBARO_LOG_DEBUG,
 
-    /// Iterator useful.
+    /// @var Iterator useful.
     COBARO_LOG_LEVELS_COUNT
 };
 
@@ -73,7 +74,8 @@ enum cobaro_log_levels {
 
 /// Log information structure.
 ///
-/// Can carry a log code, plus COBARO_LOG_PARAM_MAX parameters of variant types.
+/// Can carry a log code, plus COBARO_LOG_PARAM_MAX parameters of
+/// variant types.
 typedef struct cobaro_log {
     /// Header.
     ///
@@ -97,7 +99,8 @@ typedef struct cobaro_log {
 
     /// Array of parameters relevant to this log.
     struct {
-        /// Value type discriminant.
+        /// Value type discriminant.  Legal values are defined in the
+        /// cobaro_log_types enumeration.
         uint8_t type;
 
         // 7 spare bytes here.

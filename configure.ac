@@ -49,6 +49,11 @@ AC_SUBST(RPM_BUILD_ROOT)
 AC_PATH_PROG([DEBUILD], [debuild], [no])
 AM_CONDITIONAL(RUN_DEBUILD, test "x$DEBUILD" != xno)
 
+# OSX Settings
+AC_PATH_PROG([PKGBUILD], [pkgbuild], [no])
+AM_CONDITIONAL(RUN_PKGBUILD, text "x$PKGBUILD" != xno)
+
+
 # Library version numbering see:
 #  http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 # The rules are:
@@ -80,6 +85,32 @@ AC_CHECK_HEADERS(\
  unistd.h
 )
 AC_HEADER_TIME
+
+# Check for pthread_spin_init(), which is an optional feature of
+# POSIX.1-2008, and not implemented by Darwin (as of version 14.3) as
+# well as older earlier Linux releases.
+AC_CACHE_CHECK([for pthread spinlocks], [cobaro_cv_pthread_spinlocks], [
+    AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM([#include <pthread.h>],
+            [pthread_spinlock_t *lk; int r = pthread_spin_lock(lk);])],
+        [cobaro_cv_pthread_spinlocks=yes],
+        [cobaro_cv_pthread_spinlocks=no])])
+if test x"$cobaro_cv_pthread_spinlocks" = xyes ; then
+    AC_DEFINE([HAVE_PTHREAD_SPINLOCKS], 1,
+        [Define to 1 if pthread_spinlocks are available])
+fi
+
+# Check for GCC's atomic intrinsics.
+AC_CACHE_CHECK([for gcc atomic builtins], [cobaro_cv_gcc_atomics], [
+    AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM([],
+            [int value = 1; __sync_fetch_and_add(&value, 3);])],
+        [cobaro_cv_gcc_atomics=yes],
+        [cobaro_cv_gcc_atomics=no])])
+if test x"$cobaro_cv_gcc_atomics" = xyes ; then
+    AC_DEFINE([HAVE_GCC_ATOMICS], 1,
+        [Define to 1 if gcc supports the __sync_x operations on this platform])
+fi
 
 # See if valgrind is available
 if test "x$cross_compiling" = xyes; then

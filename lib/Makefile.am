@@ -10,7 +10,8 @@ lib_LTLIBRARIES = libcobaro-log0.la
 libcobaro_log0_ladir = $(includedir)/libcobaro-log0
 
 libcobaro_log0_la_SOURCES = \
-	log.c
+	log.c \
+	spin.h
 
 libcobaro_log0_la_LDFLAGS = \
 	-version-info @LIB_VERSION@

@@ -29,7 +29,13 @@ COPYRIGHT_END
 #  include <sys/time.h>
 #endif
 
+#if !defined(HAVE_PTHREAD_SPINLOCKS)
+#  include "spin.h"
+#endif
+
+
 #define COBARO_LOG_SLOTS (16) // Keep it small as we have limited cache
+
 
 /// Valid logging destinations
 enum cobaro_logto_t {
