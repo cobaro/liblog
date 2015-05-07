@@ -95,7 +95,7 @@ struct cobaro_loghandle {
 
  void cobaro_log_messages_set(cobaro_loghandle_t lh, char **messages)
  {
-     lh->messages = lh->messages;
+     lh->messages = messages;
      return;
  }
 
