@@ -92,7 +92,7 @@ AC_HEADER_TIME
 AC_CACHE_CHECK([for pthread spinlocks], [cobaro_cv_pthread_spinlocks], [
     AC_LINK_IFELSE(
         [AC_LANG_PROGRAM([#include <pthread.h>],
-            [pthread_spinlock_t *lk; (void)pthread_spin_lock(lk);])],
+            [pthread_spinlock_t *lk = 0; (void)pthread_spin_lock(lk);])],
         [cobaro_cv_pthread_spinlocks=yes],
         [cobaro_cv_pthread_spinlocks=no])])
 if test x"$cobaro_cv_pthread_spinlocks" = xyes ; then
