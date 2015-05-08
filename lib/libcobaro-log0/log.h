@@ -144,7 +144,7 @@ typedef struct cobaro_loghandle *cobaro_loghandle_t;
 ///     Valid log handle on success, NULL on failure
 cobaro_loghandle_t cobaro_log_init(char **messages);
 
-/// Set the message catlog in use (in case you want to change language)
+/// Set the message catalog in use (in case you want to change language)
 ///
 /// @param[in] lh
 ///     loghandle to set emssages catalog for
@@ -245,7 +245,7 @@ cobaro_log_t cobaro_log_next(cobaro_loghandle_t lh);
 ///    Pointer to log to be returned.
 void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 
-/// Emit a log to the loghandle's destination
+/// Emit a log to the loghandle's default destination
 ///
 /// @param[in] lh
 ///     loghandle to log with
@@ -254,17 +254,19 @@ void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    Pointer to log object
 bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 
-/// Set the log level below which we should ignore logs
+/// Log a message to syslog
+///
+/// This assumes an open syslogger connection
 ///
 /// @param[in] lh
-///     loghandle in use
+///     loghandle to receive a log from
 ///
-/// @param[in] level
-///    level to log below, see man (3) syslog. Default: LOG_INFO
+/// @param[in] log
+///    log data
 ///
 /// @returns
 ///    true on success, false on failure
-bool cobaro_log_loglevel_set(cobaro_loghandle_t lh, int level);
+bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Log a message to file
 ///
@@ -280,53 +282,6 @@ bool cobaro_log_loglevel_set(cobaro_loghandle_t lh, int level);
 /// @returns
 ///    true on success, false on failure
 bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
-
-/// Set the log destination to be a file handle
-///
-/// @param[in] lh
-///     loghandle in use
-///
-/// @param[in] f
-///     filehandle to log to
-///
-/// @returns
-///    true on success, false on failure
-bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f);
-
-/// Set the log 
-/// syslog handle remains open until we switch to a file, call
-/// syslog_set again, ot close the loghandle via fini.
-///
-/// @param[in] lh
-///     loghandle in use
-///
-/// @param[in] ident
-///     ident string prepended to each message, see man (3) syslog
-///
-/// @param[in] option
-///     option flags, see man (3) syslog
-///
-/// @param[in] facility
-///     syslog facility,  see man (3) syslog
-///
-/// @returns
-///    true on success, false on failure
-bool cobaro_log_syslog_set(cobaro_loghandle_t lh, char *ident,
-                           int option, int facility);
-
-/// Log a message to syslog
-///
-/// This assumes an open syslogger connection
-///
-/// @param[in] lh
-///     loghandle to receive a log from
-
-/// @param[in] log
-///    log data
-///
-/// @returns
-///    true on success, false on failure
-bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Log a message to a string
 ///
@@ -346,6 +301,40 @@ bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    true on success, false on failure
 bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                           char *s, size_t s_len);
+
+/// Set the log level below which we should ignore logs
+///
+/// @param[in] lh
+///     loghandle in use
+///
+/// @param[in] level
+///    level to log below, see man (3) syslog. Default: LOG_INFO
+///
+/// @returns
+///    true on success, false on failure
+bool cobaro_log_loglevel_set(cobaro_loghandle_t lh, int level);
+
+/// Set the default log destination to be a file handle
+///
+/// @param[in] lh
+///     loghandle in use
+///
+/// @param[in] f
+///     filehandle to log to
+///
+/// @returns
+///    true on success, false on failure
+bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f);
+
+/// Set the defaulkt log destination to be syslog
+///
+/// Caller is responsible for calling openlog(ident, option, facility)
+/// and closelog(), see man (3) syslog
+///
+/// @returns
+///    true on success, false on failure
+bool cobaro_log_syslog_set(cobaro_loghandle_t lh);
+
 
 
 #endif /* COBARO_LOG0_LOG_H */

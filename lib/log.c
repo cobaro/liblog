@@ -261,27 +261,17 @@ void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
      return true;
  }
 
- bool cobaro_log_syslog_set(cobaro_loghandle_t lh, char *ident,
-                            int option, int facility)
+bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
  {
-     // Close existing syslog handle if open
-     if (lh->logto == COBARO_LOGTO_SYSLOG) {
-         closelog(); 
-     }
-     openlog(ident, option, facility);
-     lh->logto = COBARO_LOGTO_SYSLOG;
+     lh->f = f;
+     lh->logto = COBARO_LOGTO_FILE;
 
      return true;
  }    
 
-bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
+ bool cobaro_log_syslog_set(cobaro_loghandle_t lh)
  {
-     // Close existing syslog handle if open
-     if (lh->logto == COBARO_LOGTO_SYSLOG) {
-         closelog(); 
-     }
-     lh->f = f;
-     lh->logto = COBARO_LOGTO_FILE;
+     lh->logto = COBARO_LOGTO_SYSLOG;
 
      return true;
  }    
