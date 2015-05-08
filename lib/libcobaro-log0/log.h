@@ -51,7 +51,7 @@ enum cobaro_log_levels {
     /// @var Error conditions.
     COBARO_LOG_ERR,
 
-    /// @varWarning conditions.
+    /// @var Warning conditions.
     COBARO_LOG_WARNING,
 
     /// @var Normal but significant condition.
