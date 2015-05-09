@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# @PACKAGE@ documentation build configuration file, created by
-# sphinx-quickstart on Fri Feb 13 11:58:33 2015.
+# @PACKAGE@ documentation build configuration file, modified from one
+# created by sphinx-quickstart on Fri Feb 13 11:58:33 2015.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -12,6 +12,11 @@
 # serve to show the default.
 
 import sys, os
+
+# It should be possible to override via sphinx-build
+# -DDOCUMENT_NAME_SHORT=blargle but it seems it doesn't work/
+DOCUMENT_NAME_SHORT = 'DeveloperGuide'
+DOCUMENT_NAME_LONG = u'Cobaro' + '@PACKAGE@' + DOCUMENT_NAME_SHORT
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -37,7 +42,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = '@PACKAGE@'
+master_doc = 'help'
 
 # General information about the project.
 project = u'@PACKAGE@'
@@ -164,7 +169,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'DeveloperGuidedoc'
+htmlhelp_basename = DOCUMENT_NAME_SHORT
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -183,8 +188,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('DeveloperGuide', 'DeveloperGuide.tex', u'Cobaro Log Developer Guide',
-   u'cobaro.org', 'manual'),
+    ( DOCUMENT_NAME_SHORT, DOCUMENT_NAME_SHORT + '.tex', DOCUMENT_NAME_LONG,
+      u'cobaro.org', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -213,8 +218,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('DeveloperGuide', 'DeveloperGuide', u"Developer's Guide Documentation",
-     [u'cobaro.org'], 1)
+    ( DOCUMENT_NAME_SHORT, DOCUMENT_NAME_SHORT, DOCUMENT_NAME_LONG,
+      [u'cobaro.org'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -227,9 +232,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('DeveloperGuide', 'DeveloperGuide', u"Developer's Guide Documentation",
-   u'cobaro.org', 'DeveloperGuide', '.',
-   'Miscellaneous'),
+    ( DOCUMENT_NAME_SHORT, DOCUMENT_NAME_SHORT, DOCUMENT_NAME_LONG,
+      u'cobaro.org', DOCUMENT_NAME_SHORT, '.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
