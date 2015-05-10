@@ -284,6 +284,9 @@ bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 
 /// Log a message to a string
+/// 
+/// The function will not write more than s_len bytes and will always
+/// NULL terminate the string even if that means truncating s
 ///
 /// @param[in] lh
 ///     loghandle in use
@@ -298,8 +301,9 @@ bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 ///    length of s
 ///
 /// @returns
-///    true on success, false on failure
-bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
+///     number of characters that could have been written including
+///     the terminating null had space been available
+int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                           char *s, size_t s_len);
 
 /// Set the log level below which we should ignore logs

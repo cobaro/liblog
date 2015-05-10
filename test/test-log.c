@@ -103,7 +103,8 @@ GREATEST_TEST test_set_string() {
 
     GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, sizeof(dest)));
     GREATEST_ASSERT_STR_EQ(source, dest);
-    GREATEST_ASSERT_FALSE(cobaro_log_to_string(lh, &log, dest, (size_t)2));
+    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, dest, (size_t)2));
+    GREATEST_ASSERT(dest[1] == '\0');
     GREATEST_PASS();
 }
 
@@ -193,22 +194,27 @@ GREATEST_TEST log_messages() {
     log.p[3].ipv4 = 42;
 
     // simple string literal
-    GREATEST_ASSERT(true == cobaro_log_to_string(lh, &log, s, sizeof(s)));
+    GREATEST_ASSERT(strlen(TEST_OUT1) + 1  ==
+                    cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(0 == strcmp(TEST_OUT1, s));
-
-    // Not enough room in s
-    GREATEST_ASSERT(false == cobaro_log_to_string(lh, &log, s, (size_t) 5));
 
     // One of each type
     log.code = COBARO_TEST_MESSAGE_TYPES;
-    GREATEST_ASSERT(cobaro_log_to_string(lh, &log, s, sizeof(s)));
+    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 ==
+                    cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(0 == strcmp(TEST_OUT2, s));
 
+    // without the space for the trailing null ...
+    //   we should return what could have been written was there space
+    //   we should still be null terminated
+    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 ==
+                    cobaro_log_to_string(lh, &log, s, sizeof(s)));
+    GREATEST_ASSERT(s[strlen(TEST_OUT2)] == '\0');
 
-    // Now check that without the space for the trailing null
-    GREATEST_ASSERT(false == cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2)));
+     
     // Now check that with a space for the trailing null
-    GREATEST_ASSERT(true == cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2) + 1));
+    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 == cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2) + 1));
+    GREATEST_ASSERT(s[strlen(TEST_OUT2) + 1] == '\0');
 
 
     // Log that to file

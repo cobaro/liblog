@@ -310,7 +310,7 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
      return true;
  }
 
-bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
+int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                           char *s, size_t s_len)
 {
     size_t written = 0;
@@ -353,22 +353,11 @@ bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                                         "%s", addr); 
                     break;
                 }
-                // Did we run out of space
-                if (written > s_len) {
-                    return false;
-                }
             } else {
                 // %% prints a percentage sign
                 if (*format_i18n == '%') {
                     s[written++] = '%';
                     format_i18n++; // move along
-                    // Write the trailing null if possible to mirror
-                    // the snprintf behaviour above
-                    if (written < s_len) {
-                        s[written++] = '\0';
-                    } else {
-                        return false;
-                    }
                 }
             }
         } else {
@@ -377,13 +366,13 @@ bool cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
         }
     }
 
-    // Make sure output is terminated.
+    // Always NULL terminate the output.
     if (written < s_len) {
-        s[written] = '\0';
+        s[written++] = '\0';
     } else{
         s[s_len - 1] = '\0';
     }
     
-    return true;
+    return written;
 }
 
