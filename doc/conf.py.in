@@ -16,7 +16,7 @@ import sys, os
 # It should be possible to override via sphinx-build
 # -DDOCUMENT_NAME_SHORT=blargle but it seems it doesn't work/
 DOCUMENT_NAME_SHORT = 'DeveloperGuide'
-DOCUMENT_NAME_LONG = u'Cobaro' + '@PACKAGE@' + DOCUMENT_NAME_SHORT
+DOCUMENT_NAME_LONG = u'Cobaro' + ' @PACKAGE@ ' + DOCUMENT_NAME_SHORT
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -42,7 +42,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'help'
+master_doc = DOCUMENT_NAME_SHORT
 
 # General information about the project.
 project = u'@PACKAGE@'
