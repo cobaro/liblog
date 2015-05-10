@@ -209,7 +209,7 @@ GREATEST_TEST log_messages() {
     // without the space for the trailing null ...
     //   we should return what could have been written was there space
     //   we should still be null terminated
-6    GREATEST_ASSERT(TEST_EXPECT2 ==
+    GREATEST_ASSERT(TEST_EXPECT2 ==
                     cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(s[strlen(TEST_OUT2)] == '\0');
 
