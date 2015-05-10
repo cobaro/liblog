@@ -176,7 +176,9 @@ GREATEST_TEST log_communication() {
 
 
 #define TEST_OUT1 "string literal"
+#define TEST_EXPECT1 (strlen(TEST_OUT1) + 1)
 #define TEST_OUT2 "s:string literal, i:42, f:42, ip:42.0.0.0, percent:%"
+#define TEST_EXPECT2 (strlen(TEST_OUT2) + 1)
 
 GREATEST_TEST log_messages() {
     struct cobaro_log log;
@@ -194,26 +196,27 @@ GREATEST_TEST log_messages() {
     log.p[3].ipv4 = 42;
 
     // simple string literal
-    GREATEST_ASSERT(strlen(TEST_OUT1) + 1  ==
+    GREATEST_ASSERT(TEST_EXPECT1 ==
                     cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(0 == strcmp(TEST_OUT1, s));
 
     // One of each type
     log.code = COBARO_TEST_MESSAGE_TYPES;
-    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 ==
+    GREATEST_ASSERT(TEST_EXPECT2 ==
                     cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(0 == strcmp(TEST_OUT2, s));
 
     // without the space for the trailing null ...
     //   we should return what could have been written was there space
     //   we should still be null terminated
-    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 ==
+6    GREATEST_ASSERT(TEST_EXPECT2 ==
                     cobaro_log_to_string(lh, &log, s, sizeof(s)));
     GREATEST_ASSERT(s[strlen(TEST_OUT2)] == '\0');
 
      
     // Now check that with a space for the trailing null
-    GREATEST_ASSERT(strlen(TEST_OUT2) + 1 == cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2) + 1));
+    GREATEST_ASSERT(TEST_EXPECT2 ==
+                    cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2) + 1));
     GREATEST_ASSERT(s[strlen(TEST_OUT2) + 1] == '\0');
 
 

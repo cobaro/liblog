@@ -29,6 +29,10 @@ COPYRIGHT_END
 #  include <sys/time.h>
 #endif
 
+#if defined(HAVE_SYS_PARAM_H)
+#  include <sys/param.h>
+#endif
+
 #if !defined(HAVE_PTHREAD_SPINLOCKS)
 #  include "spin.h"
 #endif
@@ -313,7 +317,7 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
 int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                           char *s, size_t s_len)
 {
-    size_t written = 0;
+    size_t written = 0; // How many _could_ be written
     char *format_i18n;
     int arg;
     char addr[INET_ADDRSTRLEN];
@@ -322,7 +326,7 @@ int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
         return false;
     }
 
-    while (*format_i18n && (written < s_len)) {
+    while (*format_i18n) {
         if (*format_i18n == '%') {
 
             format_i18n++; // move along
@@ -334,44 +338,53 @@ int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
 
                 switch (log->p[arg].type) {
                 case COBARO_STRING:
-                    written += snprintf(&s[written], s_len - written,
+                    written += snprintf(&s[written], MAX(s_len - written, 0),
                                         "%s", log->p[arg].s);
                     break;
                 case COBARO_INTEGER:
-                    written += snprintf(&s[written], s_len - written,
+                    written += snprintf(&s[written], MAX(s_len - written, 0),
                                         "%ld", log->p[arg].i);
                     break;
                 case COBARO_REAL:
-                    written += snprintf(&s[written], s_len - written,
+                    written += snprintf(&s[written], MAX(s_len - written, 0),
                                         "%g", log->p[arg].f);
                     break;
                 case COBARO_IPV4:
                     inet_ntop(AF_INET, &log->p[arg].ipv4,
                               addr, sizeof(addr));
 
-                    written += snprintf(&s[written], s_len - written,
+                    written += snprintf(&s[written], MAX(s_len - written, 0),
                                         "%s", addr); 
                     break;
                 }
             } else {
                 // %% prints a percentage sign
                 if (*format_i18n == '%') {
-                    s[written++] = '%';
+                    // Only actually write if we have enough space
+                    if (written < s_len) {
+                        s[written] = '%';
+                    }
+                    written++;
                     format_i18n++; // move along
                 }
             }
         } else {
-            s[written] = *format_i18n++;
+            // Only actually write if we have enough space
+            if (written < s_len) {
+                s[written] = *format_i18n;
+            }
             written++;
+            format_i18n++; // move along
         }
     }
 
     // Always NULL terminate the output.
     if (written < s_len) {
-        s[written++] = '\0';
+        s[written] = '\0';
     } else{
         s[s_len - 1] = '\0';
     }
+    written++;
     
     return written;
 }
