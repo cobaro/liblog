@@ -81,6 +81,7 @@ AC_CHECK_HEADERS(\
  stdint.h \
  string.h \
  syslog.h \
+ sys/param.h \
  sys/time.h \
  unistd.h
 )
