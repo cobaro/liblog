@@ -216,8 +216,8 @@ GREATEST_TEST log_messages() {
      
     // Now check that with a space for the trailing null
     GREATEST_ASSERT(TEST_EXPECT2 ==
-                    cobaro_log_to_string(lh, &log, s, strlen(TEST_OUT2) + 1));
-    GREATEST_ASSERT(s[strlen(TEST_OUT2) + 1] == '\0');
+                    cobaro_log_to_string(lh, &log, s, TEST_EXPECT2));
+    GREATEST_ASSERT(s[strlen(TEST_OUT2)] == '\0');
 
 
     // Log that to file
