@@ -10,13 +10,13 @@ A super-quick overview of how to use Cobaro Log in your program.
 * Add `pkg-config --libs libcobaro-log0` to LDFLAGS
 * Include the header:
 
-.. code:: C
+.. code:: 
 
  #include <cobaro-log0/log.h>
 
 * Create an enum and matching array for your log messages:
 
-.. code:: C
+.. code:: c
 
  enum my_log_codes {
      MY_LOG_GOOD,
@@ -32,13 +32,13 @@ A super-quick overview of how to use Cobaro Log in your program.
 
 * Create a log handle:
 
-.. code:: C
+.. code:: c
 
  cobaro_loghandle_t lh = cobaro_log_init(my_log_messages);
 
 * In a critical thread, create and send a log message:
 
-.. code:: C
+.. code:: c
 
  cobaro_log_t log = cobaro_log_claim(lh);
 
@@ -52,7 +52,7 @@ A super-quick overview of how to use Cobaro Log in your program.
 
 * While in a background thread, format and report messages:
 
-.. code:: C
+.. code:: c
 
  cobaro_log_loglevel_set(lh, COBARO_LOG_NOTICE);
  cobaro_log_syslog_set(lh, "my_app", LOG_PID, LOG_DAEMON);
@@ -220,7 +220,7 @@ Define your messages
 Log messages are defined with string message templates, stored in an
 array.
 
-.. code:: C
+.. code:: c
 
  const char *my_log_msgs[] = {
      "Template with parameters: %1, %2, %3.",
@@ -236,7 +236,7 @@ index is used to select the log message in the log structure.  It's
 often convenient to define an enum, rather than relying on the magic
 numbers.
 
-.. code:: C
+.. code:: c
 
  enum my_log_codes {
      MY_LOG_THING_WITH_ARGS,
@@ -251,7 +251,7 @@ different configurations.
 
 The handle is initialised with the set of defined messages.
 
-.. code:: C
+.. code:: c
 
  cobaro_loghandle_t log_handle = cobaro_log_init(my_log_msgs);
 
@@ -262,7 +262,7 @@ the program's locale or other setting.
 
 The array can be changed at runtime too:
 
-.. code:: C
+.. code:: c
 
  cobaro_log_messages_set(log_handle, my_logs_msgs_cn);
 
@@ -270,7 +270,7 @@ Finalisation
 ~~~~~~~~~~~~
 Cleanup is simple.
 
-.. code:: C
+.. code:: c
 
  cobaro_log_fini(log_handle);
 
@@ -285,7 +285,7 @@ is handed to another thread for formatting.  You can simply ``malloc()``
 one, use your own allocation pool, or use the pool implemented by the
 log handle type.
 
-.. code:: C
+.. code:: c
 
  log = cobaro_log_claim(log_handle);
 
@@ -294,14 +294,14 @@ get ``NULL``.
 
 Set the log message code and level:
 
-.. code:: C
+.. code:: c
 
  log->code = MY_APP_LOG_MESSAGE_FOO;
  log->level = MY_APP_LOG_LEVEL_FOO;
 
 Set any parameters needed:
 
-.. code:: C
+.. code:: c
 
  cobaro_log_set_string(log, 1, "boom!");
  cobaro_log_set_integer(log, 2, 42);
@@ -328,7 +328,7 @@ formatting and reporting via eg. syslog.
 Alternatively, you can use your own inter-thread communications
 channels to hand over the log_t pointer to a service thread.
 
-.. code:: C
+.. code:: c
 
  cobaro_log_publish(log_handle, log);
 
@@ -337,13 +337,13 @@ another thread sharing this handle.
 
 The other thread should call
 
-.. code:: C
+.. code:: c
 
  log = cobaro_log_next(log_handle);
 
 to retrieve log messages from this queue, process them, and then call
 
-.. code:: C
+.. code:: c
 
  cobaro_log_return(log_handle, log);
 
@@ -366,7 +366,7 @@ directly together with the id header to identify this pointer as a log
 message, rather than a control message.  In other cases, it'll be
 necessary to wrap the log_t pointer in a suitable envelope structure.
 
-.. code:: C
+.. code:: c
 
  log->id = MY_APP_LOG_MESSAGE;
  my_queue_append(my_queue, (void *)log);
@@ -385,20 +385,20 @@ logging system.
 
 In the most simple configuration, you select a file:
 
-.. code:: C
+.. code:: c
 
  FILE *f = fopen("/var/log/myapp.log", "w');
  cobaro_log_file_set(log_handle, f);
 
 or, `syslog` facility, with your application's name and syslog options (see syslog(3)):
 
-.. code:: C
+.. code:: c
 
  cobaro_log_syslog_set(log_handle, "my_app", LOG_PID, LOG_DAEMON);
 
 And then call
 
-.. code:: C
+.. code:: c
 
  cobaro_log(log_handle, log);
 
@@ -414,7 +414,7 @@ Directly log a message to an open file.  This ignores any
 configuration of a destination via the handle, but does check the
 handle's log level.
 
-.. code:: C
+.. code:: c
 
  cobaro_log_to_file(log_handle, log, file);
 
@@ -427,7 +427,7 @@ Logging to syslog
 
 Directly send a log message to syslog.
 
-.. code:: C
+.. code:: c
 
  cobaro_log_to_syslog(log_handle, log);
 
@@ -444,7 +444,7 @@ functions use this function internally to prepare the message.  It
 performs parameter substition on the template, and writes the
 resulting message to the provided buffer.
 
-.. code:: C
+.. code:: c
 
  cobaro_log_to_string(log_handle, log, buffer, buflen);
 
