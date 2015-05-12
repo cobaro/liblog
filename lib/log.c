@@ -237,7 +237,7 @@ void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
      return true;
  }
 
- bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
+int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
  {
      char s[1024];
      size_t formatted = 0;
@@ -256,13 +256,10 @@ void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
     formatted += snprintf(&s[formatted], sizeof(s) - formatted,
                           ".%06ld ", now.tv_usec);
 
-     if (!cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted)) {
-         return false;
-     }
-
+    formatted += cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted);
      fprintf(f, "%s\n", s);
 
-     return true;
+     return formatted;
  }
 
 bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
@@ -292,26 +289,19 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
     return false;
 }
 
- bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
+int cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
  {
      char s[1024];
+     int formatted;
+
+     formatted = cobaro_log_to_string(lh, log, s, sizeof(s));
 
      // loglevel test
-     if (log->level > lh->level) {
-         return true;
+     if (log->level <= lh->level) {
+         syslog(log->level, "%s", s);
      }
 
-     if (lh->logto != COBARO_LOGTO_SYSLOG) {
-         return false;
-     }
-
-     if (!cobaro_log_to_string(lh, log, s, sizeof(s))) {
-         return false;
-     }
-
-     syslog(log->level, "%s", s);
-
-     return true;
+     return formatted;
  }
 
 int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,

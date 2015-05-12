@@ -221,7 +221,7 @@ GREATEST_TEST log_messages() {
 
 
     // Log that to file
-    GREATEST_ASSERT(true == cobaro_log_to_file(lh, &log, stdout));
+    GREATEST_ASSERT(0 != cobaro_log_to_file(lh, &log, stdout));
 
     // Log to syslog
     openlog("test-log", LOG_PID, LOG_LOCAL0);
@@ -234,7 +234,7 @@ GREATEST_TEST log_messages() {
 
     strncpy(log.p[0].s, "yes", sizeof(log.p[0].s));
     GREATEST_ASSERT(true == cobaro_log_loglevel_set(lh, LOG_DEBUG));
-    GREATEST_ASSERT(true == cobaro_log_to_syslog(lh, &log));
+    GREATEST_ASSERT(0 != cobaro_log_to_syslog(lh, &log));
 
     closelog();
 

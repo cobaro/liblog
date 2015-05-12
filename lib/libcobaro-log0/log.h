@@ -265,8 +265,9 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    log data
 ///
 /// @returns
-///    true on success, false on failure
-bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
+///     number of characters that could have been written including
+///     the terminating null had space been available
+int cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Log a message to file
 ///
@@ -280,8 +281,9 @@ bool cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    filehandle to print to
 ///
 /// @returns
-///    true on success, false on failure
-bool cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
+///     number of characters that could have been written including
+///     the terminating null had space been available
+int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 
 /// Log a message to a string
 /// 
