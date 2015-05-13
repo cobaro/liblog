@@ -283,9 +283,12 @@ void cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    filehandle to print to
 ///
 /// @returns
-///     number of characters written or -errno on failure.
+///     -1 on failure
+///     0 will b returned if nothing was written (loglevel too high)
+///     Otherwise the number of chracters written.
 ///     errno will be ENOSPC if the formatted log message (including
 ///     timestamp) is greater than 1024 bytes
+///     See fpritnf() for other errno failures
 int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 
 /// Log a message to a string

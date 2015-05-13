@@ -41,9 +41,8 @@ COPYRIGHT_END
 #  include "spin.h"
 #endif
 
-
 #define COBARO_LOG_SLOTS (16) // Keep it small as we have limited cache
-
+#define COBARO_LOG_FORMAT_MAX (1024) // Max size we allow for format strings
 
 /// Valid logging destinations
 enum cobaro_logto_t {
@@ -243,7 +242,7 @@ void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
 
 int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
  {
-     char s[1024];
+     char s[COBARO_LOG_FORMAT_MAX];
      size_t formatted = 0;
      struct timeval now = {0};
      static const char *time_failure = "--:--:--.------";
@@ -252,7 +251,7 @@ int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
 
      // loglevel test
      if (log->level > lh->level) {
-         return true;
+         return 0;
      }
 
     // Start trace output with time (hh:mm:ss.mmmuuu).
@@ -265,15 +264,12 @@ int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
                           ".%06ld ", now.tv_usec);
     formatted += cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted);
 
-    if (formatted <= 1024) {
-        formatted = fprintf(f, "%s\n", s);
-        if (formatted) {
-            return formatted;
-        }
-    } else {
+    if (formatted > COBARO_LOG_FORMAT_MAX) {
         errno = ENOSPC;
+        return -1;
     }
-    return -errno;
+
+    return fprintf(f, "%s\n", s);
  }
 
 bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
@@ -298,7 +294,7 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
         cobaro_log_to_syslog(lh, log);
         return true;
     case COBARO_LOGTO_FILE:
-        return (cobaro_log_to_file(lh, log, lh->f) > 0);
+        return (cobaro_log_to_file(lh, log, lh->f) >= 0);
     }
 
     return false;
@@ -306,7 +302,7 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
 
 void cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
  {
-     char s[1024];
+     char s[COBARO_LOG_FORMAT_MAX];
 
      // loglevel test
      if (log->level <= lh->level) {
