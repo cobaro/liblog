@@ -252,11 +252,14 @@ void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 ///
 /// @param[in] log
 ///    Pointer to log object
+/// @returns
+///    true on success, false on any failure
 bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 
-/// Log a message to syslog
+/// Log a message to syslog.
 ///
-/// This assumes an open syslogger connection
+/// This assumes an open syslogger connection.
+/// Only the first 1024 bytes of a log message will be written.
 ///
 /// @param[in] lh
 ///     loghandle to receive a log from
@@ -265,9 +268,8 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    log data
 ///
 /// @returns
-///     number of characters that could have been written including
-///     the terminating null had space been available
-int cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
+///     void
+void cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Log a message to file
 ///
@@ -281,8 +283,9 @@ int cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 ///    filehandle to print to
 ///
 /// @returns
-///     number of characters that could have been written including
-///     the terminating null had space been available
+///     number of characters written or -errno on failure.
+///     errno will be ENOSPC if the formatted log message (including
+///     timestamp) is greater than 1024 bytes
 int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f);
 
 /// Log a message to a string

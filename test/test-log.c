@@ -234,7 +234,7 @@ GREATEST_TEST log_messages() {
 
     strncpy(log.p[0].s, "yes", sizeof(log.p[0].s));
     GREATEST_ASSERT(true == cobaro_log_loglevel_set(lh, LOG_DEBUG));
-    GREATEST_ASSERT(0 != cobaro_log_to_syslog(lh, &log));
+    cobaro_log_to_syslog(lh, &log);
 
     closelog();
 

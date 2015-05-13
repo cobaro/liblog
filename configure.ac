@@ -73,8 +73,9 @@ AC_SUBST(LIB_VERSION)
 # Header files we need to know about
 AC_CHECK_HEADERS(\
  arpa/inet.h \
- pthread.h \
+ errno.h \
  netinet/in.h \
+ pthread.h \
  stdarg.h \
  stdbool.h \
  stdio.h \

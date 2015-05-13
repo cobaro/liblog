@@ -13,6 +13,10 @@ COPYRIGHT_END
 # include <arpa/inet.h>
 #endif
 
+#if defined(HAVE_ERRNO_H)
+# include <errno.h>
+#endif
+
 #if defined(HAVE_PTHREAD_H)
 # include <pthread.h>
 #endif
@@ -242,24 +246,34 @@ int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
      char s[1024];
      size_t formatted = 0;
      struct timeval now = {0};
+     static const char *time_failure = "--:--:--.------";
+
+     errno = 0;
 
      // loglevel test
      if (log->level > lh->level) {
          return true;
      }
 
-    // Start trace output with time (hh:mm:ss).
+    // Start trace output with time (hh:mm:ss.mmmuuu).
     gettimeofday(&now, NULL);
-    formatted += strftime(s, sizeof(s), "%T", localtime(&now.tv_sec));
-
-    // Add microseconds, file and line number.
+    formatted = strftime(s, sizeof(s), "%T", localtime(&now.tv_sec));
+    if (!formatted) {
+        formatted = snprintf(s, strlen(time_failure) + 1, "%s", time_failure);
+    }
     formatted += snprintf(&s[formatted], sizeof(s) - formatted,
                           ".%06ld ", now.tv_usec);
-
     formatted += cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted);
-     fprintf(f, "%s\n", s);
 
-     return formatted;
+    if (formatted <= 1024) {
+        formatted = fprintf(f, "%s\n", s);
+        if (formatted) {
+            return formatted;
+        }
+    } else {
+        errno = ENOSPC;
+    }
+    return -errno;
  }
 
 bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f)
@@ -281,27 +295,25 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log)
 {
     switch (lh->logto) {
     case COBARO_LOGTO_SYSLOG:
-        return cobaro_log_to_syslog(lh, log);
+        cobaro_log_to_syslog(lh, log);
+        return true;
     case COBARO_LOGTO_FILE:
-        return cobaro_log_to_file(lh, log, lh->f);
+        return (cobaro_log_to_file(lh, log, lh->f) > 0);
     }
 
     return false;
 }
 
-int cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
+void cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log)
  {
      char s[1024];
-     int formatted;
-
-     formatted = cobaro_log_to_string(lh, log, s, sizeof(s));
 
      // loglevel test
      if (log->level <= lh->level) {
+         (void) cobaro_log_to_string(lh, log, s, sizeof(s));
          syslog(log->level, "%s", s);
      }
-
-     return formatted;
+     return;
  }
 
 int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
