@@ -454,7 +454,78 @@ overflow.
 
 Defining Log Templates
 ----------------------
-<suggest array structures here>
+
+We recommend that messages be defined as part of template files. As an
+example from our test code here is a fragment from our test header
+template file (see https://github.com/cobaro/liblog/blob/master/test/messages.h)
+
+.. code:: c
+
+ /// Enumeration of message identifiers 
+ ///
+ /// These are array looked up so must range from 0 to COBARO_MSG_COUNT
+ enum cobaro_test_message_ids {
+    COBARO_TEST_MESSAGE_NULL = 0,
+    COBARO_TEST_MESSAGE_TYPES = 1,
+
+    COBARO_TEST_MSG_COUNT
+ };
+
+ extern char *cobaro_messages_en[];
+ extern char *cobaro_messages_klingon[];
+
+and from the corresponding source file
+(see https://github.com/cobaro/liblog/blob/master/test/messages.c)
+
+.. code:: c
+
+ /// The RULES
+ /// You have eight parameters to play with represented as %1 through %8.
+ /// To print a '%' (percentage) symbol use %%, otherwise they're dropped.
+ /// Arguments can be used multiple times in any order you choose so 
+ /// "%4 %3 %4" is fine.
+ /// We don't give you options for pretty formatting of leading zeros etc.
+
+ /// Catalog of log messages
+ char *cobaro_messages_en [COBARO_TEST_MSG_COUNT + 1] = {
+    // COBARO_TEST_MESSAGE_NULL
+    // string literal
+    "%1",
+
+    // COBARO_TEST_MESSAGE_TYPES
+    // string, int, float, ip
+    "s:%1, i:%2, f:%3, ip:%4, percent:%%",
+
+
+    // so trailing commas always work
+    ""
+ };
+
+ char *cobaro_messages_klingon [COBARO_TEST_MSG_COUNT + 1] = {
+    // COBARO_TEST_MESSAGE_NULL
+    // string literal
+    "%1",
+
+    // COBARO_TEST_MESSAGE_TYPES
+    // string, int, float, ip
+    "i:%2, s:%1, hoch:%1, f:%3, ip:%4, chipath:%%",
+
+
+    // so trailing commas always work
+    ""
+ };
+
+You can then initialize a log handle with a specific language:
+
+.. code:: c
+
+ cobaro_loghandle_t lh = cobaro_log_init(cobaro_messages_en);
+
+and you could change languages at runtime:
+
+.. code:: c
+
+ void cobaro_log_messages_set(lh, cobaro_messages_klingon);
 
 Licensing
 ---------
