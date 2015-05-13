@@ -247,6 +247,9 @@ void cobaro_log_return(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Emit a log to the loghandle's default destination
 ///
+/// Only the first 1024 bytes of a log message will be written. If
+/// that is insufficient then use cobaro_log_to_string() and log directly.
+///
 /// @param[in] lh
 ///     loghandle to log with
 ///
@@ -259,7 +262,9 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 /// Log a message to syslog.
 ///
 /// This assumes an open syslogger connection.
-/// Only the first 1024 bytes of a log message will be written.
+///
+/// Only the first 1024 bytes of a log message will be written. If
+/// that is insufficient then use cobaro_log_to_string() and log directly.
 ///
 /// @param[in] lh
 ///     loghandle to receive a log from
@@ -272,6 +277,9 @@ bool cobaro_log(cobaro_loghandle_t lh, cobaro_log_t log);
 void cobaro_log_to_syslog(cobaro_loghandle_t lh, cobaro_log_t log);
 
 /// Log a message to file
+///
+/// Only the first 1024 bytes of a log message will be written. If
+/// that is insufficient then use cobaro_log_to_string() and log directly.
 ///
 /// @param[in] lh
 ///     loghandle in use
