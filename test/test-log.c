@@ -92,6 +92,11 @@ GREATEST_TEST log_size() {
     GREATEST_PASS();
 }
 
+GREATEST_TEST test_version() {
+    fprintf(stderr, "cobaro_log v%s\n", cobaro_log_version());
+    GREATEST_PASS();
+}
+
 GREATEST_TEST test_set_string() {
     struct cobaro_log log;
     const char *source = "abc";
@@ -252,6 +257,7 @@ GREATEST_SUITE(cobaro_test_log) {
     SET_SETUP(setup_cb, NULL);
     SET_TEARDOWN(teardown_cb, NULL);
 
+    GREATEST_RUN_TEST(test_version);
     GREATEST_RUN_TEST(log_size);
     GREATEST_RUN_TEST(test_set_string);
     GREATEST_RUN_TEST(test_set_integer);

@@ -63,6 +63,12 @@ struct cobaro_loghandle {
     cobaro_log_t blocks;     // memory for cleanup on exit
 };
 
+/// Printable version number.
+char *cobaro_log_version(void)
+{
+    return VERSION;
+}
+
  // Per-thread
  cobaro_loghandle_t cobaro_log_init(char **messages)
  {

@@ -111,7 +111,11 @@ typedef struct cobaro_log *cobaro_log_t;
 typedef struct cobaro_loghandle *cobaro_loghandle_t;
 
 
-/// Initialize the logging infrastructure
+
+/// Printable version number.
+char *cobaro_log_version(void);
+
+/// Initialize  the logging infrastructure.
 ///
 /// Must be called once before logging.  By default logging is to
 /// stdout at level LOG_INFO.
