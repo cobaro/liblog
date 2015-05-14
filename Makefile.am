@@ -6,8 +6,8 @@
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = \
-	doc \
 	lib \
+	doc \
 	m4 \
 	packages \
 	script \
