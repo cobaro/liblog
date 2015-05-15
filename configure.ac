@@ -121,7 +121,7 @@ if test x"$cobaro_cv_gcc_atomics" = xyes ; then
 fi
 
 # Check size of types that vary.
-AC_CHECK_SIZEOF(suseconds_t)
+AC_CHECK_SIZEOF([suseconds_t], [], [#include <sys/time.h>])
 
 # See if valgrind is available
 if test "x$cross_compiling" = xyes; then
