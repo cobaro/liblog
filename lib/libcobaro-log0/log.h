@@ -10,6 +10,7 @@ COPYRIGHT_END
 ****************************************************************/
 
 // All available in C99
+#include <inttypes.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>

@@ -257,7 +257,7 @@ int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
  {
      char s[COBARO_LOG_FORMAT_MAX];
      size_t formatted = 0;
-     struct timeval now = {0};
+     struct timeval now = {0, 0};
      static const char *time_failure = "--:--:--.------";
 
      errno = 0;
@@ -354,7 +354,7 @@ int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                     break;
                 case COBARO_INTEGER:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
-                                        "%ld", log->p[arg].v.i);
+                                        "%"PRIu64, log->p[arg].v.i);
                     break;
                 case COBARO_REAL:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
