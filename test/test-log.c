@@ -33,16 +33,20 @@ COPYRIGHT_END
 #define SEND_COUNT (1000)
 #define NUM_PRODUCERS (4)
 
+#define UNUSED(x) ((void)(x))
+
 // Global for your testing convenience
 cobaro_loghandle_t lh;
 
 static void setup_cb(void *data)
 {
+    UNUSED(data);
     lh = cobaro_log_init(cobaro_messages_en);
 }
 
 static void teardown_cb(void *data)
 {
+    UNUSED(data);
     cobaro_log_fini(lh);
 }
 
