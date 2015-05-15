@@ -51,6 +51,17 @@ COPYRIGHT_END
 #define COBARO_LOG_SLOTS (16) // Keep it small as we have limited cache
 #define COBARO_LOG_FORMAT_MAX (1024) // Max size we allow for format strings
 
+
+// Define a portable format for suseconds_t (from struct timeval).
+#if SIZEOF_SUSECONDS_T == 4
+#  define PRI_SUSECONDS PRIi32
+#elif SIZEOF_SUSECONDS_T == 8
+#  define PRI_SUSECONDS PRIi64
+#else
+#  error Cannot find sizeof(suseconds_t)
+#endif
+
+
 /// Valid logging destinations
 enum cobaro_logto_t {
     COBARO_LOGTO_FILE,
@@ -274,7 +285,7 @@ int cobaro_log_to_file(cobaro_loghandle_t lh, cobaro_log_t log, FILE *f)
         formatted = snprintf(s, strlen(time_failure) + 1, "%s", time_failure);
     }
     formatted += snprintf(&s[formatted], sizeof(s) - formatted,
-                          ".%06ld ", now.tv_usec);
+                          ".%06"PRI_SUSECONDS" ", now.tv_usec);
     formatted += cobaro_log_to_string(lh, log, &s[formatted], sizeof(s) - formatted);
 
     if (formatted > COBARO_LOG_FORMAT_MAX) {

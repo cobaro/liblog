@@ -120,6 +120,9 @@ if test x"$cobaro_cv_gcc_atomics" = xyes ; then
         [Define to 1 if gcc supports the __sync_x operations on this platform])
 fi
 
+# Check size of types that vary.
+AC_CHECK_SIZEOF(suseconds_t)
+
 # See if valgrind is available
 if test "x$cross_compiling" = xyes; then
    # Don't try to run valgrind when cross-compiling, because a) it's
