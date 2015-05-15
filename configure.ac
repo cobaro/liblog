@@ -94,10 +94,13 @@ AC_HEADER_TIME
 # well as older earlier Linux releases.
 AC_CACHE_CHECK([for pthread spinlocks], [cobaro_cv_pthread_spinlocks], [
     AC_LINK_IFELSE(
-        [AC_LANG_PROGRAM([#define _XOPEN_SOURCE 700],
-            [#include <features.h>],
-            [#include <pthread.h>],
-            [pthread_spinlock_t *lk = 0; (void)pthread_spin_lock(lk);])],
+        [AC_LANG_PROGRAM([
+#define _XOPEN_SOURCE 700
+#include <pthread.h>
+        ],[
+pthread_spinlock_t *lk = 0;
+(void)pthread_spin_lock(lk);
+        ])],
         [cobaro_cv_pthread_spinlocks=yes],
         [cobaro_cv_pthread_spinlocks=no])])
 if test x"$cobaro_cv_pthread_spinlocks" = xyes ; then
