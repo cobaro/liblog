@@ -99,14 +99,14 @@ struct cobaro_log {
 
             /// IPv4 address (32 bit network format)
             uint32_t ipv4;
-        };
+        } v;
     } p[COBARO_LOG_PARAM_MAX];
 
 };
 
 // log->code       is the numeric identifier for a specific log.
 // log->p[0].type  is the type of the value.
-// log->p[0].s     is a reference to a string value.
+// log->p[0].v.s   is a reference to a string value.
 
 
 /// Log structure pointer type.

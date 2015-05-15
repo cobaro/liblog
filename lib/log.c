@@ -147,29 +147,29 @@ void cobaro_log_set_string(cobaro_log_t log, int argnum, const char *source)
     // hereafter.
     int index = argnum - 1;
     log->p[index].type = COBARO_STRING;
-    strncpy(log->p[index].s, source, sizeof(log->p[index].s));
-    log->p[index].s[sizeof(log->p[index].s) - 1] = '\0';
+    strncpy(log->p[index].v.s, source, sizeof(log->p[index].v.s));
+    log->p[index].v.s[sizeof(log->p[index].v.s) - 1] = '\0';
 }
 
 void cobaro_log_set_integer(cobaro_log_t log, int argnum, int64_t source)
 {
     int index = argnum - 1;
     log->p[index].type = COBARO_INTEGER;
-    log->p[index].i = source;
+    log->p[index].v.i = source;
 }
 
 void cobaro_log_set_double(cobaro_log_t log, int argnum, double source)
 {
     int index = argnum - 1;
     log->p[index].type = COBARO_REAL;
-    log->p[index].f = source;
+    log->p[index].v.f = source;
 }
 
 void cobaro_log_set_ipv4(cobaro_log_t log, int argnum, uint32_t ipv4)
 {
     int index = argnum - 1;
     log->p[index].type = COBARO_IPV4;
-    log->p[index].ipv4 = ipv4;
+    log->p[index].v.ipv4 = ipv4;
 }
 
  void cobaro_log_publish(cobaro_loghandle_t lh, cobaro_log_t log)
@@ -343,18 +343,18 @@ int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                 switch (log->p[arg].type) {
                 case COBARO_STRING:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
-                                        "%s", log->p[arg].s);
+                                        "%s", log->p[arg].v.s);
                     break;
                 case COBARO_INTEGER:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
-                                        "%ld", log->p[arg].i);
+                                        "%ld", log->p[arg].v.i);
                     break;
                 case COBARO_REAL:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
-                                        "%g", log->p[arg].f);
+                                        "%g", log->p[arg].v.f);
                     break;
                 case COBARO_IPV4:
-                    inet_ntop(AF_INET, &log->p[arg].ipv4,
+                    inet_ntop(AF_INET, &log->p[arg].v.ipv4,
                               addr, sizeof(addr));
 
                     written += snprintf(&s[written], MAX(s_len - written, 0),

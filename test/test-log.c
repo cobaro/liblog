@@ -190,13 +190,13 @@ GREATEST_TEST log_messages() {
     log.code = COBARO_TEST_MESSAGE_NULL;
     log.level = COBARO_LOG_WARNING;
     log.p[0].type = COBARO_STRING;
-    strncpy(log.p[0].s, TEST_OUT1, sizeof(log.p[0].s));
+    strncpy(log.p[0].v.s, TEST_OUT1, sizeof(log.p[0].v.s));
     log.p[1].type = COBARO_INTEGER;
-    log.p[1].i = 42;
+    log.p[1].v.i = 42;
     log.p[2].type = COBARO_REAL;
-    log.p[2].f = 42.0;
+    log.p[2].v.f = 42.0;
     log.p[3].type = COBARO_IPV4;
-    log.p[3].ipv4 = 42;
+    log.p[3].v.ipv4 = 42;
 
     // simple string literal
     GREATEST_ASSERT(TEST_EXPECT1 ==
@@ -231,11 +231,11 @@ GREATEST_TEST log_messages() {
 
     GREATEST_ASSERT(true == cobaro_log_syslog_set(lh));
 
-    strncpy(log.p[0].s, "no", sizeof(log.p[0].s));
+    strncpy(log.p[0].v.s, "no", sizeof(log.p[0].v.s));
     GREATEST_ASSERT(true == cobaro_log_loglevel_set(lh, LOG_EMERG));
     GREATEST_ASSERT(true == cobaro_log(lh, &log));
 
-    strncpy(log.p[0].s, "yes", sizeof(log.p[0].s));
+    strncpy(log.p[0].v.s, "yes", sizeof(log.p[0].v.s));
     GREATEST_ASSERT(true == cobaro_log_loglevel_set(lh, LOG_DEBUG));
     cobaro_log_to_syslog(lh, &log);
 
@@ -243,7 +243,7 @@ GREATEST_TEST log_messages() {
 
 
     // Switch back to file
-    strncpy(log.p[0].s, "stdout", sizeof(log.p[0].s));
+    strncpy(log.p[0].v.s, "stdout", sizeof(log.p[0].v.s));
     cobaro_log_file_set(lh, stdout);
     GREATEST_ASSERT(true == cobaro_log_loglevel_set(lh, LOG_CRIT));
     GREATEST_ASSERT(true == cobaro_log(lh, &log));
