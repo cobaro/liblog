@@ -15,12 +15,12 @@ Update configure.ac's version numbers and C:R:A accordingly.
 
 Branches, tags, releases
 ------------------------
-We follow a `defined git branching model
-<http://nvie.com/posts/a-successful-git-branching-model/>`_ so our
-releases are branches named in the style of release-x.y.z
+We largely follow the `gotflow-workflow
+<https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow>`_
+with our releases branches naming style being release/x.y.z
 
-We should develop code in one of a 'develop', 'hotfix-x.y.z', or
-'feature-foo' branch and merge accordingly.
+We develop code in one of a 'develop', 'hotfix-x.y.z' or 'feature-foo'
+branch and merge accordingly.
 
 Documentation installation
 --------------------------
