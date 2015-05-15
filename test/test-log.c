@@ -6,6 +6,13 @@ All rights reserved.
 COPYRIGHT_END
 ****************************************************************/
 
+// Defining _XOPENS_SOURCE to 700 means:
+//   we get __USE_OPEN2K defined for pthread_spinlock*
+//   we get _POSIX_C_SOURCE defined sufficiently to get nanosleep/timespec
+#ifndef _XOPEN_SOURCE
+# define _XOPEN_SOURCE 700
+#endif
+
 #include "config.h"
 #include "libcobaro-log0/log.h"
 #include "greatest.h"
