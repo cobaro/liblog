@@ -390,6 +390,9 @@ bool cobaro_log_file_set(cobaro_loghandle_t lh, FILE *f);
 /// Caller is responsible for calling openlog(ident, option, facility)
 /// and closelog(), see syslog(3).
 ///
+/// @param[in] lh
+///     Log handle in use.
+///
 /// @returns
 ///    @c true on success, @c false on failure.
 bool cobaro_log_syslog_set(cobaro_loghandle_t lh);
