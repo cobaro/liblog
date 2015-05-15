@@ -365,7 +365,7 @@ int cobaro_log_to_string(cobaro_loghandle_t lh, cobaro_log_t log,
                     break;
                 case COBARO_INTEGER:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
-                                        "%"PRIu64, log->p[arg].v.i);
+                                        "%"PRIi64, log->p[arg].v.i);
                     break;
                 case COBARO_REAL:
                     written += snprintf(&s[written], MAX(s_len - written, 0),
