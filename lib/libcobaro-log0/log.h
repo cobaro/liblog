@@ -25,8 +25,6 @@ COPYRIGHT_END
 /// liblog provides a simple to use, internationalized, threaded,
 /// high-performance, C logging API licensed under the MIT license.
 ///
-/// @para
-///
 /// Log messages may be simply constructed, optionally enqueued
 /// and read by a different thread, and logged to console/file or to
 /// syslog. New logging backends may be simply added.
