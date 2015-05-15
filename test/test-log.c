@@ -19,12 +19,8 @@ COPYRIGHT_END
 # include <syslog.h>
 #endif
 
-#if defined(HAVE_SYS_TIME_H)
-#  include <sys/time.h>
-#endif
-
-#if defined(HAVE_UNISTD_H)
-#  include <unistd.h>
+#if defined(HAVE_TIME_H)
+# include <time.h>
 #endif
 
 #define SEND_COUNT (1000)
@@ -49,6 +45,7 @@ void *consumer_main(void *rock)
     int received = 0, loopcount = 0;
     cobaro_loghandle_t lh = (cobaro_loghandle_t) rock;
     cobaro_log_t log;
+    struct timespec ts = { 0,  500 };
 
     while (received < SEND_COUNT * NUM_PRODUCERS) {
         if ((log = cobaro_log_next(lh))) {
@@ -56,7 +53,7 @@ void *consumer_main(void *rock)
             received++;
         }
         loopcount++;
-        usleep(1);
+        (void)nanosleep(&ts, NULL);
     }
 
     fprintf(stderr,"Received %d, looped %d\n", received, loopcount);
@@ -69,12 +66,13 @@ void *producer_main(void *rock)
     cobaro_loghandle_t lh = (cobaro_loghandle_t) rock;
     cobaro_log_t log;
     int sent = 0, loopcount = 0;
+    struct timespec ts = { 0,  500 };
 
     while (sent < SEND_COUNT) {
         log = cobaro_log_claim(lh);
         if (!log) {
             loopcount++;
-            usleep(1);
+            (void)nanosleep(&ts, NULL);
         } else {
             cobaro_log_publish(lh, log);
             sent++;

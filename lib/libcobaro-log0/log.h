@@ -9,6 +9,11 @@ All rights reserved.
 COPYRIGHT_END
 ****************************************************************/
 
+// For struct timespec, nanosleep. must be included before time.h
+#ifndef _POSIX_C_SOURCE
+# define _POSIX_C_SOURCE	199309L
+#endif
+
 // All available in C99
 #include <stdarg.h>
 #include <stdbool.h>
