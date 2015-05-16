@@ -15,7 +15,7 @@ Update configure.ac's version numbers and C:R:A accordingly.
 
 Branches, tags, releases
 ------------------------
-We largely follow the `gotflow-workflow
+We largely follow the `gitflow-workflow
 <https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow>`_
 with our releases branches naming style being release/x.y.z
 
