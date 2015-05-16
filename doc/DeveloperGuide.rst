@@ -167,8 +167,8 @@ You can try to work around this by passing a path to the .a file to
 the linker (without a -l flag), but ... that's in hairy territory and
 having mentioned it, we'll leave you on your own with that.
 
-General Philosphy
------------------
+General Philosophy
+------------------
 The Cobaro Log package is intended for use in circumstances where a
 more traditional logging package (syslog, log4c, etc) is too
 CPU-time consuming.  Specifically, it's intended to perform no I/O and no
@@ -420,7 +420,7 @@ handle's log level.
 
 Logs written to a file are preceded by a local timestamp with
 displayed microseconds.  Note that this is the time of reporting, not
-time of occurance.
+time of occurrence.
 
 Logging to syslog
 ~~~~~~~~~~~~~~~~~
@@ -441,7 +441,7 @@ Logging to String
 Finally, you can log a message directly to a character buffer, and
 subsequently do whatever you like with it.  The file and syslog
 functions use this function internally to prepare the message.  It
-performs parameter substition on the template, and writes the
+performs parameter substitution on the template, and writes the
 resulting message to the provided buffer.
 
 .. code:: c
