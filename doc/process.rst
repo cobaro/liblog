@@ -17,10 +17,14 @@ Branches, tags, releases
 ------------------------
 We largely follow the `gitflow-workflow
 <https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow>`_
-with our releases branches naming style being release/x.y.z
+with our releases branches naming style being release/x.y.z.
+
+Tags are made via `git tag release-1.0.0; git push`.
 
 We develop code in one of a 'develop', 'hotfix-x.y.z' or 'feature-foo'
 branch and merge accordingly.
+
+
 
 Documentation installation
 --------------------------
