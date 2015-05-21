@@ -154,6 +154,7 @@ AC_CONFIG_FILES([
  m4/Makefile
  packages/Makefile
  packages/libcobaro-log0.pc
+ packages/darwin/Makefile
  packages/deb/Makefile
  packages/rpm/Makefile
  packages/rpm/SPECS/Makefile
