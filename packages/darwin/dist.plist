@@ -2,26 +2,42 @@
 <installer-gui-script minSpecVersion="1">
     <title>Cobaro Log</title>
     <organization>org.cobaro</organization>
+
     <pkg-ref id="org.cobaro.log.dev">
         <bundle-version/>
     </pkg-ref>
+
     <pkg-ref id="org.cobaro.log.run">
         <bundle-version/>
     </pkg-ref>
-    <options customize="never" require-scripts="false"/>
+
+    <options customize="always"
+             require-scripts="false"/>
+
+    <domains enable_anywhere="true"
+             enable_currentUserHome="false"
+             enable_localSystem="true"/>
+
     <choices-outline>
-        <line choice="default">
-            <line choice="org.cobaro.log.dev"/>
-            <line choice="org.cobaro.log.run"/>
-        </line>
+        <line choice="org.cobaro.log.dev"/>
+        <line choice="org.cobaro.log.run"/>
     </choices-outline>
-    <choice id="default"/>
-    <choice id="org.cobaro.log.dev" visible="false">
+
+    <choice id="org.cobaro.log.dev"
+            visible="true"
+            title="Developer"
+            description="Header files, static library and documentation">
         <pkg-ref id="org.cobaro.log.dev"/>
     </choice>
-    <pkg-ref id="org.cobaro.log.dev" version="1.0.0" onConclusion="none" installKBytes="592">#libcobaro-log0-dev.pkg</pkg-ref>
-    <choice id="org.cobaro.log.run" visible="false">
+ 
+    <choice id="org.cobaro.log.run"
+            visible="true"
+            title="Runtime"
+            description="Dynamic library"
+            start_selected="false">
         <pkg-ref id="org.cobaro.log.run"/>
     </choice>
-    <pkg-ref id="org.cobaro.log.run" version="1.0.0" onConclusion="none" installKBytes="16">#libcobaro-log0-run.pkg</pkg-ref>
+
+    <pkg-ref id="org.cobaro.log.dev" onConclusion="none" installKBytes="592">#libcobaro-log0-dev.pkg</pkg-ref>
+    <pkg-ref id="org.cobaro.log.run" onConclusion="none" installKBytes="16">#libcobaro-log0-run.pkg</pkg-ref>
 </installer-gui-script>
