@@ -3,7 +3,7 @@
 # All rights reserved.
 # COPYRIGHT_END
 
-AC_INIT([libcobaro-log0], [1.0.0], [bill@cobaro.org])
+AC_INIT([libcobaro-log0], [1.0.1], [bill@cobaro.org])
 
 AC_CONFIG_SRCDIR(lib/libcobaro-log0/log.h)
 AC_PREREQ(2.63)
