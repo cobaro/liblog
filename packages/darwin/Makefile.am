@@ -6,6 +6,7 @@
 .PHONY: darwin
 
 clean-local:
+	rm -f *.pkg
 	rm -rf $(PACKAGE)-$(VERSION)
 	rm -rf _inst
 
@@ -37,7 +38,7 @@ darwin:
 		--distribution $(srcdir)/dist.plist \
 		--package-path $(builddir) \
 		--version $(VERSION) \
-		$(PACKAGE).pkg
+		$(PACKAGE)-$(VERSION).pkg
 
 EXTRA_DIST = \
 	dist.plist
