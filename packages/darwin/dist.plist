@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <title>Cobaro Log</title>
+    <organization>org.cobaro</organization>
+    <pkg-ref id="org.cobaro.log.dev">
+        <bundle-version/>
+    </pkg-ref>
+    <pkg-ref id="org.cobaro.log.run">
+        <bundle-version/>
+    </pkg-ref>
+    <options customize="never" require-scripts="false"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="org.cobaro.log.dev"/>
+            <line choice="org.cobaro.log.run"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="org.cobaro.log.dev" visible="false">
+        <pkg-ref id="org.cobaro.log.dev"/>
+    </choice>
+    <pkg-ref id="org.cobaro.log.dev" version="1.0.0" onConclusion="none" installKBytes="592">#libcobaro-log0-dev.pkg</pkg-ref>
+    <choice id="org.cobaro.log.run" visible="false">
+        <pkg-ref id="org.cobaro.log.run"/>
+    </choice>
+    <pkg-ref id="org.cobaro.log.run" version="1.0.0" onConclusion="none" installKBytes="16">#libcobaro-log0-run.pkg</pkg-ref>
+</installer-gui-script>

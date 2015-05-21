@@ -10,15 +10,35 @@ clean-local:
 	rm -rf _inst
 
 darwin:
-	mkdir -p _inst && \
+	rm -rf _inst && \
+	mkdir -p _inst/dev && \
+	mkdir -p _inst/run && \
 	tar zxf $(top_builddir)/$(PACKAGE)-$(VERSION).tar.gz && \
 	(cd $(PACKAGE)-$(VERSION) && \
 	./bootstrap && \
 	CFLAGS="$(PACKAGE_CFLAGS)" ./configure \
-		--disable-shared --prefix=/usr/local && \
-	make install DESTDIR=$(abs_top_builddir)/packages/darwin/_inst) && \
+		--enable-shared --enable-static --prefix=/usr/local && \
+	make install DESTDIR=$(abs_top_builddir)/packages/darwin/_inst/dev) && \
+	mkdir -p _inst/run/usr/local/lib && \
+	mv _inst/dev/usr/local/lib/libcobaro-log0*dylib _inst/run/usr/local/lib && \
 	pkgbuild \
-		--root _inst \
-		--identifier org.cobaro.log \
+		--root _inst/dev \
+		--install-location "/" \
+		--identifier "org.cobaro.log.dev" \
 		--version $(VERSION) \
-		"$(PACKAGE).pkg"
+		"$(PACKAGE)-dev.pkg" && \
+	pkgbuild \
+		--root _inst/run \
+		--install-location "/" \
+		--identifier "org.cobaro.log.run" \
+		--version $(VERSION) \
+		"$(PACKAGE)-run.pkg" && \
+	productbuild \
+		--distribution $(srcdir)/dist.plist \
+		--package-path $(builddir) \
+		--version $(VERSION) \
+		$(PACKAGE).pkg
+
+EXTRA_DIST = \
+	dist.plist
+
