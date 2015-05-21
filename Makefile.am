@@ -27,6 +27,9 @@ if RUN_DEBUILD
 	make deb && \
 	rm -rf $(PACKAGE)-$(VERSION))
 endif
+if RUN_PKGBUILD
+	(cd packages/darwin; make darwin)
+endif
 
 doc_DATA = \
 	LICENSE.txt

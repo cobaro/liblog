@@ -4,6 +4,7 @@
 # COPYRIGHT_END
 
 SUBDIRS = \
+	darwin \
     deb \
 	rpm
 
