@@ -12,7 +12,7 @@ A super-quick overview of how to use Cobaro Log in your program.
 
 .. code:: 
 
- #include <cobaro-log0/log.h>
+ #include <libcobaro-log0/log.h>
 
 * Create an enum and matching array for your log messages:
 
