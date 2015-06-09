@@ -14,7 +14,7 @@ function trapfunc {
 trap trapfunc ERR
 set -e
 
-export CFLAGS='-Wall -Werror -O2 -g -pipe -rdynamic -std=c99'
+export CFLAGS='-Wall -Werror -O2 -g -pipe -std=c99'
 ./bootstrap
 ./configure
 make
