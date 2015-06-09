@@ -4,7 +4,7 @@
 # COPYRIGHT_END
 
 if RUN_VALGRIND
-VG_TESTS_ENVIRONMENT = libtool --mode=execute $(VALGRIND) \
+VG_TESTS_ENVIRONMENT = $(LIBTOOL) --mode=execute $(VALGRIND) \
         --trace-children=yes \
         --leak-check=full \
         --show-reachable=yes \
