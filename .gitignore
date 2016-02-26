@@ -20,4 +20,5 @@ ltmain.sh
 missing
 test-driver
 *.deb
+*.dmg
 *.rpm
